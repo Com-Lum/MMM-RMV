@@ -291,7 +291,7 @@ Module.register("MMM-RMV", {
 	{
 	        var DataRow = document.createElement("tr");
 	        var DataLine = document.createElement("td");
-		DataLine.className = "line";
+		DataLine.className = "lines";
 	        DataLine.innerHTML = data.name;
 	        DataRow.appendChild(DataLine);
 		//
