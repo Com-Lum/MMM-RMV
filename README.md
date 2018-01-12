@@ -48,7 +48,7 @@ As similar to other modules:
         module: 'MMM-RMV',
         position: 'top_right',
         config: {
-                apiKey: '', // can be requested at [RMV - opendata](https://opendata.rmv.de/site/start.html)
+                apiKey: '', // see chapter below
                 stationId: '', // default is: '30000001' - 'Frankfurt (Main) Hauptwache'
                 fDestination1: '', // default is: '30000010' - 'Frankfurt (Main) Hauptbahnhof'
         }
@@ -64,7 +64,7 @@ As similar to other modules:
         module: 'MMM-RMV',
         position: 'top_right',
         config: {
-			apiKey: '', // can be requested at [RMV - opendata](https://opendata.rmv.de/site/start.html)
+			apiKey: '', // see chapter below
 			stationId: '', 	
 			fDestination1: '', 
 			fDestination2: '', // The final destination of the train will be displayed for each line.
@@ -74,14 +74,15 @@ As similar to other modules:
 			maxC: 6, // maximum displayed connections (standard = 30)
 			lines: '', // Other lines will be ignored
 			LabelRow: true, // Show or hide column headers
-		    	updateInterval: 60 * 1000 // default: once per minute
+		    	updateInterval: '1 * 60 * 1000' // default: once per minute
         }
     }
     
   ...
     
-## Station ID
+## Station ID and apiKey
 
+An apiKey has to be requested at [RMV - opendata](https://opendata.rmv.de/site/start.html).<br>
 The stationId can be found in file 'StationID.txt' or at [RMV - opendata](https://opendata.rmv.de/site/start.html).<br>	
 The correct station name is in column 'E'.<br>
 <b>Note</b>: The stations have to be added in german only.
@@ -92,15 +93,15 @@ The correct station name is in column 'E'.<br>
 | **Option** | **Default** | **Description** |
 | :---: | :---: | --- |
 | stationId | 30000001 | <BR>Choose your departure station<BR><EM> default value: '30000001' - 'Frankfurt (Main) Hauptwache'</EM><P> |
-| fDestination1 | 30000010 | <BR>The final stop of the train line has to be added here! (station name)<BR><EM>default value: '30000010' - 'Frankfurt (Main) Hauptbahnhof'</EM><P> |
-| fDestination2 | 30002930 | <BR>The final stop of the train line has to be added here! (station name)<BR><EM>default value: '30002930' - 'Frankfurt (Main) Flughafen Regionalbahnhof'</EM><P> |
+| fDestination1 | 'Frankfurt (Main) Hauptbahnhof' | <BR>The final stop of the train line has to be added here! (station name)<BR><EM>default value: 'Frankfurt (Main) Hauptbahnhof'</EM><P> |
+| fDestination2 |'Frankfurt (Main) Flughafen Regionalbahnhof' | <BR>The final stop of the train line has to be added here! (station name)<BR><EM>default value: 'Frankfurt (Main) Flughafen Regionalbahnhof'</EM><P> |
 | fDestination3<BR>`optional` | | <BR>The final stop of the train line has to be added here! (station name) |
 | fDestination4<BR>`optional` | | <BR>The final stop of the train line has to be added here! (station name) |
 | fDestination5<BR>`optional` | | <BR>The final stop of the train line has to be added here! (station name) |
 | maxC<BR>`optional` | 30 | <BR>Maximum displayed lines <BR><EM><B>Note</B>: only the lines within a time frame of 2 hours will be displayed. If there less lines than the limit only the available lines will be displayed</EM><P> |
 | lines<BR>`optional` |  | <BR> Not specific lines will be ignored (add commas between the lines)<BR><EM> Example: 'S8, S1' </BR></E><P> |
 | labelRow<BR>`optional` | true | <BR> Show or hide column headers<BR> <P> |
-| updateInterval<BR>`optional`  | 1*60*1000 | <BR> Update interval in milliseconds <BR><EM> default: Once per minute </EM><P> |
+| updateInterval<BR>`optional`  | '60000' | <BR> Update interval in milliseconds <BR><EM> default: Once per minute </EM><P> |
 
 
 ## Screenshots
