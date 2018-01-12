@@ -1,1 +1,9 @@
-
+{
+  "LINE": "Linie",
+  "DESTINATION": "Richtung",
+  "DEPARTURE": "Abfahrt",
+  "NOW": "sofort",
+  "No_CONNECTION": "Keine Verbindungen verfuegbar",
+  "MINUTE": "Minute",
+  "MINUTES": "Minuten" 
+}
