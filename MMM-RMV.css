@@ -1,0 +1,43 @@
+.MMM-RMV .table {
+    border-spacing: 0px 0px;
+    border-collapse: separate;
+    text-align: left;
+	}
+
+.MMM-RMV .RowSp {
+	padding-bottom: 5px;
+	}
+
+.MMM-KVV .destination {
+	font-weight: normal;
+	color: white;
+	}
+	
+.MMM-RMV .lines {
+    border-spacing: 10px 0px;
+    border-collapse: separate;
+    text-align: left;
+	color:white;
+	font-weight: normal;
+	width: 50px;
+	}
+	
+.MMM-RMV .departure {
+	padding-left: 10px;
+	text-align: right;
+	font-weight: normal;
+	color: white;
+	}
+
+.MMM-RMV .departureLate {
+	padding-left: 10px;
+	text-align: right;
+	font-weight: normal;
+	color: red;
+	}
+	
+.MMM-RMV .NoConRow {
+	font-weight: normal;
+	color: white;
+	}
+	
