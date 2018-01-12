@@ -48,6 +48,7 @@ As similar to other modules:
         module: 'MMM-RMV',
         position: 'top_right',
         config: {
+                apiKey: '', // can be requested at [RMV - opendata](https://opendata.rmv.de/site/start.html)
                 stationId: '', // default is: '30000001' - 'Frankfurt (Main) Hauptwache'
                 fDestination1: '', // default is: '30000010' - 'Frankfurt (Main) Hauptbahnhof'
         }
@@ -63,6 +64,7 @@ As similar to other modules:
         module: 'MMM-RMV',
         position: 'top_right',
         config: {
+			apiKey: '', // can be requested at [RMV - opendata](https://opendata.rmv.de/site/start.html)
 			stationId: '', 	
 			fDestination1: '', 
 			fDestination2: '', // The final destination of the train will be displayed for each line.
