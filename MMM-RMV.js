@@ -300,7 +300,7 @@ Module.register("MMM-RMV", {
         	DataRow.appendChild(destination);
 		//Create current Time
 		var date = new Date();
-		var hour = date.getHours() - 1;
+		var hour = date.getHours();
 		var min = date.getMinutes();
 		var DifMin = data.rtTime.slice(3,5) - min;
 		var DifHour = data.rtTime.slice(0,2) - hour;
