@@ -274,17 +274,16 @@ Module.register("MMM-RMV", {
 	rmvLines: function(IgLines, LinesConfig) 
 	{
 		//Ignore spaces / not needed characters
-		var linesWoC = lines_config.replace(/\s+/g,'');
+		var linesWoC = LinesConfig.replace(/\s+/g,'');
 		//Create a line array from the config parameter
-		var LineArr = inesWoC.split(",");
+		var LineArr = linesWoC.split(",");
 		//Check lines from config
 		for (var a=0; a<LineArr.length; a++) 
 		{
                         if(LineArr[a][0].length == 1)
                         {       LineArr[a] = "S" + LineArr[a];    }
 			if(LineArr[a] == IgLines)
-			{
-                             console.log("Line: " + LineArr[a]);	
+			{	
                              return true;	
                         }
 		}
