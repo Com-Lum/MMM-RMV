@@ -96,7 +96,7 @@ Module.register("MMM-RMV", {
 		  var trains = this.rmv_data.Departure[f];
 		  if(this.config.lines !== '' ) 
 		  {			
-			if(this.rmv_lines(trains.Product.line, this.config.lines)) 
+			if(this.rmvLines(trains.Product.line, this.config.lines)) 
 			{													
 				if (trains.direction === this.config.fDestination1) 
 				{	countedLines = countedLines + 1;	}
@@ -280,8 +280,8 @@ Module.register("MMM-RMV", {
 		//Check lines from config
 		for (var a=0; a<LineArr.length; a++) 
 		{
-                        if(LineArr[a][0].length == 1)
-                        {       LineArr[a] = "S" + LineArr[a];    }
+                        if(IgLines.length == 1)
+                        {       IgLines = "S" + IgLines;    }
 			if(LineArr[a] == IgLines)
 			{	
                              return true;	
