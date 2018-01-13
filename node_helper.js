@@ -24,8 +24,6 @@ module.exports = NodeHelper.create({
 	{
 		var para = this.config.apiKey;
 		para +="&id=" + this.config.stationId;
-		if (this.config.lines !== '') 
-		{	para += "&lines=" + this.config.lines;	}
 		para +="&format=json";
 		return para;
 	},
