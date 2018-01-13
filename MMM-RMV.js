@@ -14,7 +14,7 @@ Module.register("MMM-RMV", {
 		apiKey: '',
 		stationId: '3000001',
 		maxC: '50',
-		lines: '', // ['S8', 'S1']
+		lines: '', // "S8, S1"
 		fDestination1: 'Wiesbaden Hauptbahnhof',
 		fDestination2: 'Hanau Hauptbahnhof',
 		fDestination3: '',
@@ -96,7 +96,7 @@ Module.register("MMM-RMV", {
 		  var trains = this.rmv_data.Departure[f];
 		  if(this.config.lines !== '' ) 
 		  {			
-			if(this.rmv_lines(trains.route, this.config.lines)) 
+			if(this.rmv_lines(trains.Product.line, this.config.lines)) 
 			{													
 				if (trains.direction === this.config.fDestination1) 
 				{	countedLines = countedLines + 1;	}
@@ -280,8 +280,13 @@ Module.register("MMM-RMV", {
 		//Check lines from config
 		for (var a=0; a<LineArr.length; a++) 
 		{
+                        if(LineArr[a][0].length == 1)
+                        {       LineArr[a] = "S" + LineArr[a];    }
 			if(LineArr[a] == IgLines)
-			{	return true;	}
+			{
+                             console.log("Line: " + LineArr[a]);	
+                             return true;	
+                        }
 		}
 	return false;
 	},
