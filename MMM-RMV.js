@@ -96,7 +96,7 @@ Module.register("MMM-RMV", {
 		  var trains = this.rmv_data.Departure[f];
 		  if(this.config.lines !== '' ) 
 		  {			
-			if(this.rmvLines(trains.Product.line, this.config.lines)) 
+			if(this.rmvLines(trains.name, this.config.lines)) 
 			{													
 				if (trains.direction === this.config.fDestination1) 
 				{	countedLines = countedLines + 1;	}
@@ -140,7 +140,7 @@ Module.register("MMM-RMV", {
 		  {
 		  	if (countedLines < this.config.maxC)
 			{
-				if(this.rmv_lines(trains.route, this.config.lines)) 
+				if(this.rmvLines(trains.name, this.config.lines)) 
 				{
 					if (trains.direction === this.config.fDestination1) 
 					{
@@ -275,6 +275,7 @@ Module.register("MMM-RMV", {
 	{
 		//Ignore spaces / not needed characters
 		var linesWoC = LinesConfig.replace(/\s+/g,'');
+		IgLines = IgLines.replace(/\s+g,'');
 		//Create a line array from the config parameter
 		var LineArr = linesWoC.split(",");
 		//Check lines from config
@@ -284,10 +285,10 @@ Module.register("MMM-RMV", {
                         {       IgLines = "S" + IgLines;    }
 			if(LineArr[a] == IgLines)
 			{	
-                             return true;	
+                             return false;	
                         }
 		}
-	return false;
+	return true;
 	},
 
 
@@ -306,10 +307,25 @@ Module.register("MMM-RMV", {
 		var date = new Date();
 		var hour = date.getHours();
 		var min = date.getMinutes();
-		var DifMin = data.rtTime.slice(3,5) - min;
-		var DifHour = data.rtTime.slice(0,2) - hour;
+		var dataHour;
+		var dataMin;
+		var dataTime;
+		if (!data.rtTime)
+		{
+			dataHour = data.time.slice(0,2);
+			dataMin = data.time.slice(3,5);
+			dataTime = data.time.slice(0,5);
+		}
+		else
+		{
+			dataHour = data.rtTime.slice(0,2);
+			dataMin = data.rtTime.slice(3,5);
+			dataTime = data.rtTime.slice(0,5);
+		}
+		var DifMin = dataMin - min;
+		var DifHour = dataHour - hour;
 		var Dif = DifHour * 60 + DifMin;
-  		var Late = ((data.rtTime.slice(0,2) - data.time.slice(0,2)) * 60) + (data.rtTime.slice(3,5) - data.time.slice(3,5));
+  		var Late = ((dataHour - data.time.slice(0,2)) * 60) + (dataMin - data.time.slice(3,5));
 
 		if (Late == 0)
 		{
@@ -322,7 +338,7 @@ Module.register("MMM-RMV", {
 			else if (Dif < 45) 
 			{	departure.innerHTML = 'In ' + Dif + ' ' + this.translate("MINUTES");	}
 			else
-			{	departure.innerHTML = data.rtTime.slice(0,5);	}
+			{	departure.innerHTML = dataTime;	}
 		} 
 		else
 		{
@@ -334,7 +350,7 @@ Module.register("MMM-RMV", {
 			{	departure.innerHTML = 'In 1 ' + this.translate("MINUTE") + '(+' + Late + ')';	} 
 			else if (Dif < 45) 
 			{	departure.innerHTML = 'In ' + Dif + ' ' + this.translate("MINUTES")+ '(+' + Late + ')';	} 
-			else {	departure.innerHTML = data.rtTime.slice(0,5) + '(+' + Late + ')';	}
+			else {	departure.innerHTML = dataTime + '(+' + Late + ')';	}
 		}
 		DataRow.appendChild(departure);
 		return DataRow;
