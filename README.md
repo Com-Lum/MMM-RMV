@@ -9,9 +9,13 @@ for the [MagicMirror<sup>2</sup>](https://github.com/MichMich/MagicMirror) proje
 
 Please feel free to contact me in case you have questions, comments or improvements.
 
+## Description
+
+The departure monitor displays all leaving trams/busses/trains for a given station. It is necessary to specify the station ID to define the departure station. To define the direction it is also necessary to add the final destination of the trains/busses/trams which you are interested in. The module will not display all departures of a station, only the departures for the given final destinations.
+
 ## Version:
 
-v1.0.0<br>
+v1.0.1<br>
 <b>Note</b>: The feature to ignore lines is currently not working...
 
 ## Translation
