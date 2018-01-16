@@ -4,7 +4,7 @@
  * By Com-Lum / https://github.com/Com-Lum
  * MIT Licensed.
  * 
- * v1.0.0
+ * v1.0.1
  */
 
 Module.register("MMM-RMV", {
