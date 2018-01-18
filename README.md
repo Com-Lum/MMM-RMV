@@ -14,9 +14,10 @@ Please feel free to contact me in case you have questions, comments or improveme
 The departure monitor displays all leaving trams/busses/trains for a given station. It is necessary to specify the station ID to define the departure station. To define the direction it is also necessary to add the final destination of the trains/busses/trams which you are interested in. The module will not display all departures of a station, only the departures for the given final destinations.
 
 ## Version:
-
-v1.0.1<br>
-<b>Note</b>: The feature to ignore lines is currently not working...
+v1.0.0: First Release<br>
+v1.0.1: IgnoringLines added<br>
+v1.0.2: Displayed data is splitted into the different transport types<br>
+<b>Note</b>: 
 
 ## Translation
 
@@ -75,7 +76,7 @@ As similar to other modules:
 			fDestination3: '', 
 			fDestination4: '', 
 			fDestination5: '', 	
-			maxC: 6, // maximum displayed connections (standard = 30)
+			maxC: 6, // maximum displayed connections (standard = 15)
 			lines: '', // Other lines will be ignored
 			LabelRow: true, // Show or hide column headers
 		    	updateInterval: '1 * 60 * 1000' // default: once per minute
@@ -102,7 +103,7 @@ The correct station name is in column 'E'.<br>
 | fDestination3<BR>`optional` | | <BR>The final stop of the train line has to be added here! (station name) |
 | fDestination4<BR>`optional` | | <BR>The final stop of the train line has to be added here! (station name) |
 | fDestination5<BR>`optional` | | <BR>The final stop of the train line has to be added here! (station name) |
-| maxC<BR>`optional` | 30 | <BR>Maximum displayed lines <BR><EM><B>Note</B>: only the lines within a time frame of 2 hours will be displayed. If there less lines than the limit only the available lines will be displayed</EM><P> |
+| maxC<BR>`optional` | 15 | <BR>Maximum displayed lines <BR><EM><B>Note</B>: only the lines within a time frame of 2 hours will be displayed. If there less lines than the limit only the available lines will be displayed</EM><P> |
 | lines<BR>`optional` |  | <BR> Not specific lines will be ignored (add commas between the lines)<BR><EM> Example: 'S8, S1' </BR></E><P> |
 | labelRow<BR>`optional` | true | <BR> Show or hide column headers<BR> <P> |
 | updateInterval<BR>`optional`  | '60000' | <BR> Update interval in milliseconds <BR><EM> default: Once per minute </EM><P> |
