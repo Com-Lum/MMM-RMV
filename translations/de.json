@@ -5,5 +5,10 @@
   "NOW": "sofort",
   "No_CONNECTION": "Keine Verbindungen verfuegbar",
   "MINUTE": "Minute",
-  "MINUTES": "Minuten" 
+  "MINUTES": "Minuten",
+  "TRAM": "S-Bahn",
+  "SUB": "U-Bahn",
+  "BUS": "Bus",
+  "TRAIN": "Zug",
+  "UNKNOWN": "Unbekanntes Transportmittel"
 }

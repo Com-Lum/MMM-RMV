@@ -4,12 +4,20 @@
     text-align: left;
 	}
 
+.MMM-RMV .type {
+	font-weight: normal;
+    	border-collapse: separate;
+	color: white;
+	}
+
+
 .MMM-RMV .RowSp {
 	padding-bottom: 5px;
 	}
 
-.MMM-KVV .destination {
+.MMM-RMV .destination {
 	font-weight: normal;
+    	border-collapse: separate;
 	color: white;
 	}
 	
