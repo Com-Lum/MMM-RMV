@@ -111,6 +111,8 @@ The correct station name is in column 'E'.<br>
 
 ## Screenshots
 
+![German version](screenshots/de.png)
+![English version](screenshots/en.png)
 
 ## Licence
 MIT License
