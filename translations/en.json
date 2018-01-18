@@ -5,5 +5,10 @@
   "NOW": "now",
   "No_CONNECTION": "No connections available",
   "MINUTE": "minute",
-  "MINUTES": "minutes"  
+  "MINUTES": "minutes",
+  "TRAM": "Tram",
+  "SUB": "Subway",
+  "BUS": "Bus",
+  "TRAIN": "Train",
+  "UNKNOWN": "Unknown Transport"
 }
