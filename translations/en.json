@@ -10,5 +10,6 @@
   "SUB": "Subway",
   "BUS": "Bus",
   "TRAIN": "Train",
-  "UNKNOWN": "Unknown Transport"
+  "UNKNOWN": "Unknown Transport",
+  "CANCELLED": "Cancelled"
 }

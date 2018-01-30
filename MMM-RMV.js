@@ -554,7 +554,7 @@ Module.register("MMM-RMV", {
 			Dif = Dif * (-1);
 		}
 
-		if (Late == 0)
+		if (Late == 0 && data.reachable == true)
 		{
 			var departure = document.createElement("td");
 			departure.className = "departure";
@@ -567,7 +567,7 @@ Module.register("MMM-RMV", {
 			else
 			{	departure.innerHTML = dataTime;	}
 		} 
-		else
+		else if (data.reachable == true)
 		{
 			var departure = document.createElement("td");
 			departure.className = "departureLate";
@@ -578,6 +578,12 @@ Module.register("MMM-RMV", {
 			else if (Dif < 45) 
 			{	departure.innerHTML = 'In ' + Dif + ' ' + this.translate("MINUTES")+ '(+' + Late + ')';	} 
 			else {	departure.innerHTML = dataTime + '(+' + Late + ')';	}
+		}
+		else
+		{
+			var departure = document.createElement("td");
+			departure.className = "departure";
+			departure.innerHTML = this.translate("CANCELLED");
 		}
 		DataRow.appendChild(departure);
 		return DataRow;
