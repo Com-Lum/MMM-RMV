@@ -544,14 +544,24 @@ Module.register("MMM-RMV", {
 			dataMin = data.rtTime.slice(3,5);
 			dataTime = data.rtTime.slice(0,5);
 		}
-		var DifMin = dataMin - min;
-		var DifHour = dataHour - hour;
-		var Dif = DifHour * 60 + DifMin;
-  		var Late = ((dataHour - data.time.slice(0,2)) * 60) + (dataMin - data.time.slice(3,5));
-		if (!data.rtTime && DifMin < 0)
+		if (dataHour < 6 && hour > 20)
 		{
-			Late = min - dataMin
-			Dif = Dif * (-1);
+			dataHour = dataHour + 24;
+		}
+		var DifMin = ((dataHour * 60) + dataMin) - ((hour * 60)+ min);
+		var DifHour = dataHour - hour ;
+  		var Late = ((dataHour - data.time.slice(0,2)) * 60) + (dataMin - data.time.slice(3,5));
+		if (!data.rtTime)
+		{
+			if (DifMin < 0)
+			{
+				DifMin = DifMin * (-1);
+				Late = DifMin;
+			}
+			else
+			{
+				Late = DifMin;
+			}
 		}
 
 		if (Late == 0 && data.reachable == true)
@@ -562,8 +572,8 @@ Module.register("MMM-RMV", {
 			{	departure.innerHTML = this.translate("NOW");	}
 			else if (DifHour == 0 && DifMin == 1)
 			{	departure.innerHTML = 'In 1 ' + this.translate("MINUTE");	}
-			else if (Dif < 45) 
-			{	departure.innerHTML = 'In ' + Dif + ' ' + this.translate("MINUTES");	}
+			else if (DifMin < 45) 
+			{	departure.innerHTML = 'In ' + DifMin + ' ' + this.translate("MINUTES");	}
 			else
 			{	departure.innerHTML = dataTime;	}
 		} 
@@ -575,8 +585,10 @@ Module.register("MMM-RMV", {
 			{	departure.innerHTML = this.translate("NOW") + '(+' + Late + ')';	}
 			else if (DifHour == 0 && DifMin == 1) 
 			{	departure.innerHTML = 'In 1 ' + this.translate("MINUTE") + '(+' + Late + ')';	} 
-			else if (Dif < 45) 
-			{	departure.innerHTML = 'In ' + Dif + ' ' + this.translate("MINUTES")+ '(+' + Late + ')';	} 
+			else if (DifMin < 45 && data.rTime) 
+			{	departure.innerHTML = 'In ' + DifMin + ' ' + this.translate("MINUTES")+ '(+' + Late + ')';	} 
+			else if (Late > 30 && !data.rTime)
+			{	departure.innerHTML = this.translate("UNCLEAR")+ ' (+' + Late + ')';	}
 			else {	departure.innerHTML = dataTime + '(+' + Late + ')';	}
 		}
 		else
