@@ -11,5 +11,6 @@
   "BUS": "Bus",
   "TRAIN": "Train",
   "UNKNOWN": "Unknown Transport",
-  "CANCELLED": "Cancelled"
+  "CANCELLED": "Cancelled",
+  "UNCLEAR": "Unclear"
 }
