@@ -548,18 +548,15 @@ Module.register("MMM-RMV", {
 		{
 			dataHour = dataHour + 24;
 		}
-		var DifMin = ((dataHour * 60) + dataMin) - ((hour * 60)+ min);
-		var DifHour = dataHour - hour ;
+		var DifMin = dataMin - min;
+		var Dif = ((dataHour * 60) - (hour * 60)) + DifMin;
+		var DifHour = dataHour - hour;
   		var Late = ((dataHour - data.time.slice(0,2)) * 60) + (dataMin - data.time.slice(3,5));
 		if (!data.rtTime)
 		{
-			if (DifMin < 0)
+			if (Dif < 0)
 			{
-				DifMin = DifMin * (-1);
-				Late = DifMin;
-			}
-			else
-			{
+				Dif = Dif * (-1);
 				Late = DifMin;
 			}
 		}
@@ -568,11 +565,11 @@ Module.register("MMM-RMV", {
 		{
 			var departure = document.createElement("td");
 			departure.className = "departure";
-			if (DifHour == 0 && DifMin == 0)
+			if (DifHour == 0 && Dif == 0)
 			{	departure.innerHTML = this.translate("NOW");	}
-			else if (DifHour == 0 && DifMin == 1)
+			else if (DifHour == 0 && Dif == 1)
 			{	departure.innerHTML = 'In 1 ' + this.translate("MINUTE");	}
-			else if (DifMin < 45) 
+			else if (Dif < 45) 
 			{	departure.innerHTML = 'In ' + DifMin + ' ' + this.translate("MINUTES");	}
 			else
 			{	departure.innerHTML = dataTime;	}
@@ -581,11 +578,11 @@ Module.register("MMM-RMV", {
 		{
 			var departure = document.createElement("td");
 			departure.className = "departureLate";
-		        if (DifHour == 0 && DifMin == 0)
+		        if (DifHour == 0 && Dif == 0)
 			{	departure.innerHTML = this.translate("NOW") + '(+' + Late + ')';	}
-			else if (DifHour == 0 && DifMin == 1) 
+			else if (DifHour == 0 && Dif == 1) 
 			{	departure.innerHTML = 'In 1 ' + this.translate("MINUTE") + '(+' + Late + ')';	} 
-			else if (DifMin < 45 && data.rTime) 
+			else if (Dif < 45 && data.rTime) 
 			{	departure.innerHTML = 'In ' + DifMin + ' ' + this.translate("MINUTES")+ '(+' + Late + ')';	} 
 			else if (Late > 30 && !data.rTime)
 			{	departure.innerHTML = this.translate("UNCLEAR")+ ' (+' + Late + ')';	}
