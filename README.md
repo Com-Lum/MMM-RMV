@@ -17,6 +17,7 @@ The departure monitor displays all leaving trams/busses/trains for a given stati
 v1.0.0: First Release<br>
 v1.0.1: IgnoringLines added<br>
 v1.0.2: Displayed data is splitted into the different transport types<br>
+v1.0.3: Minor Bug Fixing, 23-0 hour problems, no RTD available, ...<br>
 <b>Note</b>: 
 
 ## Translation
