@@ -4,7 +4,7 @@
  * By Com-Lum / https://github.com/Com-Lum
  * MIT Licensed.
  * 
- * v1.0.2
+ * v1.0.4
  */
 
 Module.register("MMM-RMV", {
@@ -529,7 +529,7 @@ Module.register("MMM-RMV", {
 		//Create current Time
 
 		var date = new Date();
-		var hour = date.getHours()+7;
+		var hour = date.getHours();
 		var min = date.getMinutes();
 		var dataHour;
 		var dataMin;
