@@ -13,7 +13,7 @@ Module.register("MMM-RMV", {
 		apiUrl: 'https://www.rmv.de/hapi/departureBoard?accessId=',
 		apiKey: '',
 		stationId: '3000001',
-		maxC: '15',
+		maxC: 15,
 		lines: '', // "S1, U1"
 		fDestination1: 'Wiesbaden Hauptbahnhof',
 		fDestination2: 'Hanau Hauptbahnhof',
@@ -22,6 +22,7 @@ Module.register("MMM-RMV", {
 		fDestination5: '',
 		labelRow: true,
 		stopName: 'RMV',
+		maxT: 120,
         	updateInterval: 1 * 60 * 1000,       // every minute
     },
 
@@ -55,7 +56,7 @@ Module.register("MMM-RMV", {
 	    this.rmv_data = payload;
 	    this.config.stopName = this.rmv_data.Departure[0].stop;
 	    this.updateDom();
-	    //console.log(payload);	//see recieved data	
+	    console.log(payload);	//see recieved data	
 	}
     },
 
@@ -556,10 +557,13 @@ Module.register("MMM-RMV", {
 		var MinCur = (hour * 60) + min;
 		var MinPlanRT = (dataHour * 60) + dataMin;
 		var MinPlan = ((parseInt(data.time.slice(0,2),10)) *60) + (parseInt(data.time.slice(3,5)));
+		if (AddHour && data.time.slice(0,2) < 2)
+		{	
+			MinPlan = MinPlan + 24 * 60;	
+		}
 		var DifTime = MinPlanRT - MinCur;
-		if (AddHour)
-		{	DifTime = DifTime - 60;	}
 		var Late = MinPlanRT - MinPlan 	
+		//console.log('MC:' + MinCur + 'MPR:' + MinPlanRT +'MP:' + MinPlan +'Diff:' + DifTime +'L:' + Late);
 		if (!data.rtTime)
 		{
 			if (DifTime < 0)
@@ -585,7 +589,7 @@ Module.register("MMM-RMV", {
 				{	
 					if (dataMin < 10)
 					{ dataMin = '0' + dataMin; }
-					departure.innerHTML = (parseInt(dataHour,10) - 25) + ':' + dataMin;	
+					departure.innerHTML = (parseInt(dataHour,10) - 24) + ':' + dataMin;	
 				}
 				else
 				{
@@ -612,7 +616,7 @@ Module.register("MMM-RMV", {
 					if (dataMin < 10)
 					{ dataMin = '0' + dataMin; }
 					
-					departure.innerHTML = (parseInt(dataHour,10) - 25) + ':' + dataMin + ' (+' + Late + ')';	
+					departure.innerHTML = (parseInt(dataHour,10) - 24) + ':' + dataMin + ' (+' + Late + ')';	
 				}
 				else
 				{
