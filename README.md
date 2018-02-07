@@ -17,6 +17,7 @@ The departure monitor displays all leaving trams/busses/trains for a given stati
 v1.0.0: First Release<br>
 v1.0.1: IgnoringLines added<br>
 v1.0.2: Displayed data is splitted into the different transport types<br>
+v1.0.3: Minor Bug Fixing, 23-0 hour problems, no RTD available, ...<br>
 <b>Note</b>: 
 
 ## Translation
@@ -75,7 +76,8 @@ As similar to other modules:
 			fDestination2: '', // The final destination of the train will be displayed for each line.
 			fDestination3: '', 
 			fDestination4: '', 
-			fDestination5: '', 	
+			fDestination5: '',
+			maxT: 60, 	
 			maxC: 6, // maximum displayed connections (standard = 15)
 			lines: '', // Other lines will be ignored
 			LabelRow: true, // Show or hide column headers
@@ -103,7 +105,8 @@ The correct station name is in column 'E'.<br>
 | fDestination3<BR>`optional` | | <BR>The final stop of the train line has to be added here! (station name) |
 | fDestination4<BR>`optional` | | <BR>The final stop of the train line has to be added here! (station name) |
 | fDestination5<BR>`optional` | | <BR>The final stop of the train line has to be added here! (station name) |
-| maxC<BR>`optional` | 15 | <BR>Maximum displayed lines <BR><EM><B>Note</B>: only the lines within a time frame of 2 hours will be displayed. If there less lines than the limit only the available lines will be displayed</EM><P> |
+| maxT<BR>`optional` | 60 | <BR>Displayed Time Frame <BR><EM><B>Note</B>: only the lines within this time frame will be displayed.</EM><P> |
+| maxC<BR>`optional` | 15 | <BR>Maximum displayed lines <BR><EM><B>Note</B>: only the lines within a time frame of 1 hours (default) will be displayed. If there less lines than the limit only the available lines will be displayed</EM><P> |
 | lines<BR>`optional` |  | <BR> Not specific lines will be ignored (add commas between the lines)<BR><EM> Example: 'S8, S1' </BR></E><P> |
 | labelRow<BR>`optional` | true | <BR> Show or hide column headers<BR> <P> |
 | updateInterval<BR>`optional`  | '60000' | <BR> Update interval in milliseconds <BR><EM> default: Once per minute </EM><P> |

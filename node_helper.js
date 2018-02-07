@@ -24,6 +24,7 @@ module.exports = NodeHelper.create({
 	{
 		var para = this.config.apiKey;
 		para +="&id=" + this.config.stationId;
+		para +="&duration=" + this.config.maxT;
 		para +="&format=json";
 		return para;
 	},

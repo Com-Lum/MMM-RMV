@@ -4,7 +4,7 @@
  * By Com-Lum / https://github.com/Com-Lum
  * MIT Licensed.
  * 
- * v1.0.2
+ * v1.0.3
  */
 
 Module.register("MMM-RMV", {
@@ -13,7 +13,7 @@ Module.register("MMM-RMV", {
 		apiUrl: 'https://www.rmv.de/hapi/departureBoard?accessId=',
 		apiKey: '',
 		stationId: '3000001',
-		maxC: '15',
+		maxC: 15,
 		lines: '', // "S1, U1"
 		fDestination1: 'Wiesbaden Hauptbahnhof',
 		fDestination2: 'Hanau Hauptbahnhof',
@@ -22,6 +22,7 @@ Module.register("MMM-RMV", {
 		fDestination5: '',
 		labelRow: true,
 		stopName: 'RMV',
+		maxT: 60,
         	updateInterval: 1 * 60 * 1000,       // every minute
     },
 
@@ -525,68 +526,105 @@ Module.register("MMM-RMV", {
 		}
 	        destination.innerHTML = dest;
         	DataRow.appendChild(destination);
+
 		//Create current Time
+
 		var date = new Date();
 		var hour = date.getHours();
 		var min = date.getMinutes();
 		var dataHour;
 		var dataMin;
 		var dataTime;
+		var AddHour = false;
 		if (!data.rtTime)
 		{
-			dataHour = data.time.slice(0,2);
-			dataMin = data.time.slice(3,5);
+			dataHour = parseInt(data.time.slice(0,2),10);
+			dataMin = parseInt(data.time.slice(3,5));
 			dataTime = data.time.slice(0,5);
 		}
 		else
 		{
-			dataHour = data.rtTime.slice(0,2);
-			dataMin = data.rtTime.slice(3,5);
+			dataHour = parseInt(data.rtTime.slice(0,2),10);
+			dataMin = parseInt(data.rtTime.slice(3,5));
 			dataTime = data.rtTime.slice(0,5);
 		}
-		if (dataHour < 6 && hour > 20)
+		if (dataHour < 2 && hour > 22)
 		{
 			dataHour = dataHour + 24;
+			AddHour = true;
+			
 		}
-		var DifMin = dataMin - min;
-		var Dif = ((dataHour * 60) - (hour * 60)) + DifMin;
-		var DifHour = dataHour - hour;
-  		var Late = ((dataHour - data.time.slice(0,2)) * 60) + (dataMin - data.time.slice(3,5));
+		var MinCur = (hour * 60) + min;
+		var MinPlanRT = (dataHour * 60) + dataMin;
+		var MinPlan = ((parseInt(data.time.slice(0,2),10)) *60) + (parseInt(data.time.slice(3,5)));
+		if (AddHour && data.time.slice(0,2) < 2)
+		{	
+			MinPlan = MinPlan + 24 * 60;	
+		}
+		var DifTime = MinPlanRT - MinCur;
+		if (data.time.slice(0,2) > 22 && hour < 2)
+		{	var Late = MinPlanRT + (23 * 60) - MinPlan;	}
+		else
+		{	var Late = MinPlanRT - MinPlan;		}
 		if (!data.rtTime)
 		{
-			if (Dif < 0)
+			if (DifTime < 0)
 			{
-				Dif = Dif * (-1);
-				Late = DifMin;
+				DifTime = DifTime * (-1);
+				var Late = DifTime;
 			}
 		}
-
+		
 		if (Late == 0 && data.reachable == true)
 		{
 			var departure = document.createElement("td");
 			departure.className = "departure";
-			if (DifHour == 0 && Dif == 0)
+			if (DifTime == 0)
 			{	departure.innerHTML = this.translate("NOW");	}
-			else if (DifHour == 0 && Dif == 1)
+			else if (DifTime == 1)
 			{	departure.innerHTML = 'In 1 ' + this.translate("MINUTE");	}
-			else if (Dif < 45) 
-			{	departure.innerHTML = 'In ' + DifMin + ' ' + this.translate("MINUTES");	}
+			else if (DifTime < 45) 
+			{	departure.innerHTML = 'In ' + DifTime + ' ' + this.translate("MINUTES");	}
 			else
-			{	departure.innerHTML = dataTime;	}
+			{	
+				if (AddHour)
+				{	
+					if (dataMin < 10)
+					{ dataMin = '0' + dataMin; }
+					departure.innerHTML = (parseInt(dataHour,10) - 24) + ':' + dataMin;	
+				}
+				else
+				{
+					departure.innerHTML = dataTime;	
+				}
+			}
 		} 
 		else if (data.reachable == true)
 		{
 			var departure = document.createElement("td");
 			departure.className = "departureLate";
-		        if (DifHour == 0 && Dif == 0)
-			{	departure.innerHTML = this.translate("NOW") + '(+' + Late + ')';	}
-			else if (DifHour == 0 && Dif == 1) 
-			{	departure.innerHTML = 'In 1 ' + this.translate("MINUTE") + '(+' + Late + ')';	} 
-			else if (Dif < 45 && data.rTime) 
-			{	departure.innerHTML = 'In ' + DifMin + ' ' + this.translate("MINUTES")+ '(+' + Late + ')';	} 
-			else if (Late > 30 && !data.rTime)
+		        if (DifTime == 0)
+			{	departure.innerHTML = this.translate("NOW") + ' (+' + Late + ')';	}
+			else if (DifTime == 1) 
+			{	departure.innerHTML = 'In 1 ' + this.translate("MINUTE") + ' (+' + Late + ')';	} 
+			else if (DifTime < 45 && data.rtTime) 
+			{	departure.innerHTML = 'In ' + DifTime + ' ' + this.translate("MINUTES")+ ' (+' + Late + ')';	} 
+			else if (Late > 30 && !data.rtTime)
 			{	departure.innerHTML = this.translate("UNCLEAR")+ ' (+' + Late + ')';	}
-			else {	departure.innerHTML = dataTime + '(+' + Late + ')';	}
+			else 
+			{	
+				if (AddHour)
+				{	
+					if (dataMin < 10)
+					{ dataMin = '0' + dataMin; }
+					
+					departure.innerHTML = (parseInt(dataHour,10) - 24) + ':' + dataMin + ' (+' + Late + ')';	
+				}
+				else
+				{
+					departure.innerHTML = dataTime + ' (+' + Late + ')';
+				}
+			}
 		}
 		else
 		{

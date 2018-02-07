@@ -1,6 +1,6 @@
 {
   "name": "MMM-RMV",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "MagicMirror² module - Rhein-Main local transport system (RMV) - Departure Monitor",
   "repository": {
     "type": "git",
@@ -9,10 +9,10 @@
   "keywords": [
     "MagicMirror",
     "RMV",
-	"Frankfurt",
-	"magic mirror",
+    "Frankfurt",
+    "magic mirror",
     "public transport",
-    "local transit"  
+    "local transit"
   ],
   "author": "Com-Lum",
   "license": "MIT",
