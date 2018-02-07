@@ -56,7 +56,7 @@ Module.register("MMM-RMV", {
 	    this.rmv_data = payload;
 	    this.config.stopName = this.rmv_data.Departure[0].stop;
 	    this.updateDom();
-	    console.log(payload);	//see recieved data	
+	    //console.log(payload);	//see recieved data	
 	}
     },
 
@@ -562,8 +562,10 @@ Module.register("MMM-RMV", {
 			MinPlan = MinPlan + 24 * 60;	
 		}
 		var DifTime = MinPlanRT - MinCur;
-		var Late = MinPlanRT - MinPlan 	
-		//console.log('MC:' + MinCur + 'MPR:' + MinPlanRT +'MP:' + MinPlan +'Diff:' + DifTime +'L:' + Late);
+		if (data.time.slice(0,2) > 22 && hour < 2)
+		{	var Late = MinPlanRT + (23 * 60) - MinPlan;	}
+		else
+		{	var Late = MinPlanRT - MinPlan;		}
 		if (!data.rtTime)
 		{
 			if (DifTime < 0)
