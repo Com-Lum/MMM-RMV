@@ -22,7 +22,7 @@ Module.register("MMM-RMV", {
 		fDestination5: '',
 		labelRow: true,
 		stopName: 'RMV',
-		maxT: 120,
+		maxT: 60,
         	updateInterval: 1 * 60 * 1000,       // every minute
     },
 
