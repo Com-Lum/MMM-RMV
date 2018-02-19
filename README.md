@@ -56,7 +56,7 @@ As similar to other modules:
         config: {
                 apiKey: '', // see chapter below
                 stationId: '', // default is: '30000001' - 'Frankfurt (Main) Hauptwache'
-                fDestination1: '', // default is: '30000010' - 'Frankfurt (Main) Hauptbahnhof'
+                fDestination1: '', // default is: 'Frankfurt (Main) Hauptbahnhof'
         }
     }
    
