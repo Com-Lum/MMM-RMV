@@ -536,6 +536,7 @@ Module.register("MMM-RMV", {
 		var dataMin;
 		var dataTime;
 		var AddHour = false;
+		var maxTDif = Math.round(this.config.maxT/60)+1;
 		if (!data.rtTime)
 		{
 			dataHour = parseInt(data.time.slice(0,2),10);
@@ -548,7 +549,7 @@ Module.register("MMM-RMV", {
 			dataMin = parseInt(data.rtTime.slice(3,5));
 			dataTime = data.rtTime.slice(0,5);
 		}
-		if (dataHour < 2 && hour > 22)
+		if (dataHour < maxTDif && hour > 24 - maxTDif)
 		{
 			dataHour = dataHour + 24;
 			AddHour = true;
