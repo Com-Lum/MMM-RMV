@@ -80,7 +80,7 @@ As similar to other modules:
 			maxT: 60, 	
 			maxC: 6, // maximum displayed connections (standard = 15)
 			lines: '', // Other lines will be ignored
-			LabelRow: true, // Show or hide column headers
+			labelRow: true, // Show or hide column headers
 		    	updateInterval: '1 * 60 * 1000' // default: once per minute
         }
     }

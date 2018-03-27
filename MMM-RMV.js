@@ -15,8 +15,8 @@ Module.register("MMM-RMV", {
 		stationId: '3000001',
 		maxC: 15,
 		lines: '', // "S1, U1"
-		fDestination1: 'Wiesbaden Hauptbahnhof',
-		fDestination2: 'Hanau Hauptbahnhof',
+		fDestination1: 'Frankfurt (Main) Hauptbahnhof',
+		fDestination2: 'Frankfurt (Main) Flughafen Regionalbahnhof',
 		fDestination3: '',
 		fDestination4: '',
 		fDestination5: '',
