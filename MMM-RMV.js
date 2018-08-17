@@ -331,7 +331,7 @@ Module.register("MMM-RMV", {
 		{
 			table.appendChild(this.Build_NoConRow());
 			collector.appendChild(table);
-			collector.hide(30000);
+			this.hide(30000);
 		}
 	    }
 	    else
