@@ -85,7 +85,7 @@ As similar to other modules:
 			fDestination5: '',
 			maxT: 60, 	
 			maxC: 6, // maximum displayed connections (standard = 15)
-			lines: '', // Other lines will be ignored
+			lines: '', // This lines will be ignored
 			labelRow: true, // Show or hide column headers
 		    	updateInterval: '1 * 60 * 1000' // default: once per minute
         }
