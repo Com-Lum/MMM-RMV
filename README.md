@@ -18,7 +18,8 @@ v1.0.0: First Release<br>
 v1.0.1: IgnoringLines added<br>
 v1.0.2: Displayed data is splitted into the different transport types<br>
 v1.0.3: Minor Bug Fixing, 23-0 hour problems, no RTD available, ...<br>
-<b>Note</b>: 
+v1.0.4: Switch-option added in config to switch between all departures of the station and only interested ones(see Notes and Options)<br>
+<b>Note</b>:
 
 ## Translation
 
@@ -43,9 +44,13 @@ As similar to other modules:
 * If no connection is available the module disappears after a few seconds<p>
 * If there is an error during data retrieving process it will be shown in the console<p>
 * if the train is not on time the line will be displayed in red (can be configured)<p>
+* Switch-Option: All departures of the station OR only departures according to the configured "fDestination"'s
 
 ## Configuration
- 
+
+<b>Important: "fDestination" does not mean the arrival station which you are interested in!</b>
+<b>It has to be the final destination of the transport line!</b>
+
 1. minimum configuration within `config.js`:
 
   ... 
@@ -72,6 +77,7 @@ As similar to other modules:
         config: {
 			apiKey: '', // see chapter below
 			stationId: '', 	
+			fDest: // see chapter below
 			fDestination1: '', 
 			fDestination2: '', // The final destination of the train will be displayed for each line.
 			fDestination3: '', 
@@ -100,6 +106,7 @@ The correct station name is in column 'E'.<br>
 | **Option** | **Default** | **Description** |
 | :---: | :---: | --- |
 | stationId | 30000001 | <BR>Choose your departure station<BR><EM> default value: '30000001' - 'Frankfurt (Main) Hauptwache'</EM><P> |
+| fDest<BR>`optional`| true | <BR>true: only departures with final destination specified in the "fDestination"'s. <BR>false: all departures of the station will be shown<P> |
 | fDestination1 | 'Frankfurt (Main) Hauptbahnhof' | <BR>The final stop of the train line has to be added here! (station name)<BR><EM>default value: 'Frankfurt (Main) Hauptbahnhof'</EM><P> |
 | fDestination2 |'Frankfurt (Main) Flughafen Regionalbahnhof' | <BR>The final stop of the train line has to be added here! (station name)<BR><EM>default value: 'Frankfurt (Main) Flughafen Regionalbahnhof'</EM><P> |
 | fDestination3<BR>`optional` | | <BR>The final stop of the train line has to be added here! (station name) |
