@@ -444,7 +444,7 @@ Module.register("MMM-RMV", {
 	
 	    if (countedLines + countedLinesTram + countedLinesSub + countedLinesBus + countedLinesTrain == 0 ) 
 	    {			
-		if (!collector.hidden) 
+		if (!this.hidden) 
 		{
 			table.appendChild(this.Build_NoConRow());
 			collector.appendChild(table);
@@ -453,6 +453,10 @@ Module.register("MMM-RMV", {
 	    }
 	    else
 	    {
+	        if (this.hidden)
+		{
+			this.show(5000);
+		}
 		if (countedLines == 0) 
 		{	
 			if (!coll.hidden) 
