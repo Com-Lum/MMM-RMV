@@ -15,7 +15,7 @@ Module.register("MMM-RMV", {
 		stationId: '3000001',
 		maxC: 15,
 		lines: '', // "S1, U1,Tram 11"
-		Ctype: '', // "Bus" "Tram" "Sub" "Train"
+		Ctype: '', // "Bus" "Tram" "Sub" "Train" "Unk"
 		fDest: 'true',
 		fDestination1: 'Frankfurt (Main) Hauptbahnhof',
 		fDestination2: 'Frankfurt (Main) Flughafen Regionalbahnhof',
@@ -463,7 +463,7 @@ Module.register("MMM-RMV", {
 			this.hide(30000);
 		}
 	    }
-	    else if (this.rmvTypeall(countedLinesTram, countedLinesSub, countedLinesBus, countedLinesTrain))
+	    else if (this.rmvTypeall(countedLines, countedLinesTram, countedLinesSub, countedLinesBus, countedLinesTrain))
 	    {
 		if (!this.hidden) 
 		{
@@ -478,7 +478,7 @@ Module.register("MMM-RMV", {
 		{
 			this.show(5000);
 		}
-		if (countedLines == 0) 
+		if (countedLines == 0 || this.rmvType("Unk")) 
 		{	
 			if (!coll.hidden) 
 			{
@@ -610,6 +610,7 @@ Module.register("MMM-RMV", {
 		TypesWoC2 = TypesWoC2.replace('Sub', this.translate("SUB"));
 		TypesWoC2 = TypesWoC2.replace('Bus', this.translate("BUS"));
 		TypesWoC2 = TypesWoC2.replace('Train', this.translate("TRAIN"));
+		TypesWoC2 = TypesWoC2.replace('Unk', this.translate("UNK"));
 		LinesWoC2 = LinesWoC2.replace(/Tram/g, 'S');
 		if (TypeConfig2 == "")
 		{
@@ -703,7 +704,7 @@ Module.register("MMM-RMV", {
 	return false;
 	},
 
-	rmvTypeall: function(cLTram, cLS, cLB, cLTrain)
+	rmvTypeall: function(cL, cLTram, cLS, cLB, cLTrain)
 	{
 		var unk = 1, tram = 1, sub = 1, bus = 1, train = 1;
 		var TypeConfig = this.config.Ctype;
@@ -734,6 +735,10 @@ Module.register("MMM-RMV", {
 			{	
                              train = 0;
                         }
+			if(TypeArr[a] == "Unk")
+			{	
+                             unk = 0;
+                        }
 		}
 		if (tram == 1 && cLTram == 0)
 		{
@@ -751,7 +756,11 @@ Module.register("MMM-RMV", {
 		{
 			train = 0;
 		}
-		if (tram + sub + bus + train==0)
+		if (unk == 1 && cL == 0)
+		{
+			unk = 0;
+		}
+		if (tram + sub + bus + train + unk==0)
 		{
 			return true;
 		}
