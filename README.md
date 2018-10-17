@@ -20,6 +20,7 @@ v1.0.2: Displayed data is splitted into the different transport types<br>
 v1.0.3: Minor Bug Fixing, 23-0 hour problems, no RTD available, ...<br>
 v1.0.4: Switch-option added in config to switch between all departures of the station and only interested ones(see Notes and Options)<br>
 v1.0.5: Ignoring transport types added<br>
+v1.0.5.1: update of Ignoring transport types<br>
 <b>Note</b>:
 
 ## Translation
@@ -87,7 +88,7 @@ As similar to other modules:
 			maxT: 60, 	
 			maxC: 6, // maximum displayed connections (standard = 15)
 			lines: '', // These lines will be ignored
-			Ctype: '', // These transport types will be ignored "Tram,Bus,Sub,Train"
+			Ctype: '', // These transport types will be ignored "Tram,Bus,Sub,Train,Unk"
 			labelRow: true, // Show or hide column headers
 			showblocked: false, // Show the blocked transport types/lines in a separate line
 		    	updateInterval: '1 * 60 * 1000' // default: once per minute
@@ -118,7 +119,7 @@ The correct station name is in column 'E'.<br>
 | maxT<BR>`optional` | 60 | <BR>Displayed Time Frame <BR><EM><B>Note</B>: only the lines within this time frame will be displayed.</EM><P> |
 | maxC<BR>`optional` | 15 | <BR>Maximum displayed lines <BR><EM><B>Note</B>: only the lines within a time frame of 1 hours (default) will be displayed. If there less lines than the limit only the available lines will be displayed</EM><P> |
 | lines<BR>`optional` |  | <BR> Specific lines will be ignored (add commas between the lines)(For all trams with number >9 a "Tram" needs to be added before the number)<BR><EM> Example: 'S8, S1,Tram11' </BR></E><P> |
-| Ctype<BR>`optional` |  | <BR> Specific transport types will be ignored (add commas between the types)<BR><EM> Example: 'Tram, Train,Sub,Bus' </BR></E><P> |
+| Ctype<BR>`optional` |  | <BR> Specific transport types will be ignored (add commas between the types)<BR><EM> Example: 'Tram, Train,Sub,Bus,Unk' </BR></E><P> |
 | labelRow<BR>`optional` | true | <BR> Show or hide column headers<BR> <P> |
 | showblocked<BR>`optional` | false | <BR> Show or hide a line with all blocked transport types/lines<BR> <P> |
 | updateInterval<BR>`optional`  | '60000' | <BR> Update interval in milliseconds <BR><EM> default: Once per minute </EM><P> |
