@@ -494,6 +494,22 @@ Module.register("MMM-RMV", {
 			table.appendChild(this.Build_RowSp());
 			coll.appendChild(table);
 		}
+		if (countedLines == 0 || this.rmvType("Unknown")) 
+		{	
+			if (!coll.hidden) 
+			{
+				table.appendChild(this.Build_NoConRow());
+				coll.appendChild(table);
+				coll.style.display = 'none';	
+			}
+		}
+		else
+		{
+			if (coll.hidden) 
+			{	coll.show(5000);	} 
+			table.appendChild(this.Build_RowSp());
+			coll.appendChild(table);
+		}
 		if (countedLinesTram == 0 || this.rmvType("Tram")) 
 		{	
 			if (!collTram.hidden) 
