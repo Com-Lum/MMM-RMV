@@ -3,7 +3,7 @@
   "DESTINATION": "Richtung",
   "DEPARTURE": "Abfahrt",
   "NOW": "sofort",
-  "No_CONNECTION": "Keine Verbindungen verfügbar",
+  "NO_CONNECTION": "Keine Verbindungen verfügbar",
   "MINUTE": "Minute",
   "MINUTES": "Minuten",
   "TRAM": "S-Bahn",
@@ -12,5 +12,7 @@
   "TRAIN": "Zug",
   "UNKNOWN": "Unbekanntes Transportmittel",
   "CANCELLED": "Entfällt",
-  "UNCLEAR": "Unklar"
+  "UNCLEAR": "Unklar",
+  "ALL_BLOCKED": "Alle Verbindungen blockiert, Config anpassen",
+  "BLOCKED": "Blockierte Typen/Linien"
 }

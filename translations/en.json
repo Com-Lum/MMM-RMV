@@ -3,7 +3,7 @@
   "DESTINATION": "Destination",
   "DEPARTURE": "Departure",
   "NOW": "now",
-  "No_CONNECTION": "No connections available",
+  "NO_CONNECTION": "No connections available",
   "MINUTE": "minute",
   "MINUTES": "minutes",
   "TRAM": "Tram",
@@ -12,5 +12,7 @@
   "TRAIN": "Train",
   "UNKNOWN": "Unknown Transport",
   "CANCELLED": "Cancelled",
-  "UNCLEAR": "Unclear"
+  "UNCLEAR": "Unclear",
+  "ALL_BLOCKED": "All connections blocked, modify config",
+  "BLOCKED": "Blocked types/lines"
 }
