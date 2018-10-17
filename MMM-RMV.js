@@ -15,6 +15,7 @@ Module.register("MMM-RMV", {
 		stationId: '3000001',
 		maxC: 15,
 		lines: '', // "S1, U1,Tram 11"
+		Ctype: '', // "Bus" "Tram" "Sub" "Train"
 		fDest: 'true',
 		fDestination1: 'Frankfurt (Main) Hauptbahnhof',
 		fDestination2: 'Frankfurt (Main) Flughafen Regionalbahnhof',
@@ -22,6 +23,7 @@ Module.register("MMM-RMV", {
 		fDestination4: '',
 		fDestination5: '',
 		labelRow: true,
+		showblocked: false,
 		stopName: 'RMV',
 		maxT: 60,
         	updateInterval: 1 * 60 * 1000,       // every minute
@@ -69,6 +71,16 @@ Module.register("MMM-RMV", {
         var header = document.createElement("header");
         header.innerHTML = this.config.stopName;
         collector.appendChild(header);
+
+	// lists the blocked types and lines
+
+	if (this.config.showblocked == true && (this.config.lines !== "" || this.config.Ctype !== ""))
+	{
+		var headerBlocked = document.createElement("header");
+		headerBlocked.className = "blocked";
+		headerBlocked.innerHTML = this.Build_BlockedRow();
+		collector.appendChild(headerBlocked);
+	}
 	
 	// splits the different transport types	
 	
@@ -151,7 +163,7 @@ Module.register("MMM-RMV", {
 	     for (var f in this.rmv_data.Departure)
 	     {
 		  var trains = this.rmv_data.Departure[f];
-		  if(this.config.lines !== '' ) 
+		  if(this.config.lines !== '') 
 		  {			
 			if(this.rmvLines(trains.name, this.config.lines)) 
 			{	
@@ -442,13 +454,22 @@ Module.register("MMM-RMV", {
 		
 	// adds the tables which contain connections to the main display
 	
-	    if (countedLines + countedLinesTram + countedLinesSub + countedLinesBus + countedLinesTrain == 0 ) 
+	    if (countedLines + countedLinesTram + countedLinesSub + countedLinesBus + countedLinesTrain == 0) 
 	    {			
 		if (!this.hidden) 
 		{
 			table.appendChild(this.Build_NoConRow());
 			collector.appendChild(table);
 			this.hide(30000);
+		}
+	    }
+	    else if (this.rmvTypeall(countedLinesTram, countedLinesSub, countedLinesBus, countedLinesTrain))
+	    {
+		if (!this.hidden) 
+		{
+			table.appendChild(this.Build_AllBlockRow());
+			collector.appendChild(table);
+			this.hide(60000);
 		}
 	    }
 	    else
@@ -473,8 +494,7 @@ Module.register("MMM-RMV", {
 			table.appendChild(this.Build_RowSp());
 			coll.appendChild(table);
 		}
-
-		if (countedLinesTram == 0) 
+		if (countedLinesTram == 0 || this.rmvType("Tram")) 
 		{	
 			if (!collTram.hidden) 
 			{
@@ -491,7 +511,7 @@ Module.register("MMM-RMV", {
 			collTram.appendChild(tableTram);
 		}
 
-		if (countedLinesSub == 0) 
+		if (countedLinesSub == 0 || this.rmvType("Sub")) 
 		{	
 			if (!collSub.hidden) 
 			{
@@ -508,7 +528,7 @@ Module.register("MMM-RMV", {
 			collSub.appendChild(tableSub);
 		}
 
-		if (countedLinesBus == 0) 
+		if (countedLinesBus == 0 || this.rmvType("Bus")) 
 		{	
 			if (!collBus.hidden) 
 			{
@@ -525,7 +545,7 @@ Module.register("MMM-RMV", {
 			collBus.appendChild(tableBus);
 		}
 
-		if (countedLinesTrain == 0) 
+		if (countedLinesTrain == 0 || this.rmvType("Train")) 
 		{	
 			if (!collTrain.hidden) 
 			{
@@ -561,9 +581,49 @@ Module.register("MMM-RMV", {
 		var NoConHeader = document.createElement("th");
 		NoConHeader.className = "NoConRow";
 		NoConHeader.setAttribute("colSpan", "3");
-		NoConHeader.innerHTML = this.translate("No_CONNECTION");
+		NoConHeader.innerHTML = this.translate("NO_CONNECTION");
 		NoConRow.appendChild(NoConHeader); 
 		return NoConRow;
+    	},
+
+	Build_AllBlockRow: function () 
+	{
+        	var AllBlockRow = document.createElement("tr");
+		var AllBlockHeader = document.createElement("th");
+		AllBlockHeader.className = "NoConRow";
+		AllBlockHeader.setAttribute("colSpan", "3");
+		AllBlockHeader.innerHTML = this.translate("ALL_BLOCKED");
+		AllBlockRow.appendChild(AllBlockHeader); 
+		return AllBlockRow;
+    	},
+
+	Build_BlockedRow: function () 
+	{
+        	var Blocked = this.translate("BLOCKED") + ": ";
+		var TypeConfig2 = this.config.Ctype;
+		var LinesConfig2 = this.config.lines;
+		//Ignore spaces / not needed characters
+		var TypesWoC2 = TypeConfig2.replace(/\s+/g,'');
+		var LinesWoC2 = LinesConfig2.replace(/\s+/g,'');
+		//Create a type array from the config parameter
+		TypesWoC2 = TypesWoC2.replace('Tram', this.translate("TRAM"));
+		TypesWoC2 = TypesWoC2.replace('Sub', this.translate("SUB"));
+		TypesWoC2 = TypesWoC2.replace('Bus', this.translate("BUS"));
+		TypesWoC2 = TypesWoC2.replace('Train', this.translate("TRAIN"));
+		LinesWoC2 = LinesWoC2.replace(/Tram/g, 'S');
+		if (TypeConfig2 == "")
+		{
+			Blocked = Blocked + LinesWoC2;
+		}
+		else if (LinesConfig2 == "")
+		{
+			Blocked = Blocked + TypesWoC2;
+		}
+		else
+		{	
+			Blocked = Blocked + TypesWoC2 + "," + LinesWoC2;
+		}
+		return Blocked;
     	},
 
 	Build_LabelRow: function () 
@@ -620,7 +680,86 @@ Module.register("MMM-RMV", {
 		}
 	return true;
 	},
+	
+	rmvType: function(IgType) 
+	{
+		var TypeConfig = this.config.Ctype;
+		if (TypeConfig=='')
+		{
+			return false;
+		}
+		//Ignore spaces / not needed characters
+		var TypesWoC = TypeConfig.replace(/\s+/g,'');
+		//Create a type array from the config parameter
+		var TypeArr = TypesWoC.split(",");
+		//Check Types from config
+		for (var a=0; a<TypeArr.length; a++) 
+		{
+			if(TypeArr[a] == IgType)
+			{	
+                             return true;	
+                        }
+		}
+	return false;
+	},
 
+	rmvTypeall: function(cLTram, cLS, cLB, cLTrain)
+	{
+		var unk = 1, tram = 1, sub = 1, bus = 1, train = 1;
+		var TypeConfig = this.config.Ctype;
+		if (TypeConfig=='')
+		{
+			return false;
+		}
+		//Ignore spaces / not needed characters
+		var TypesWoC = TypeConfig.replace(/\s+/g,'');
+		//Create a line array from the config parameter
+		var TypeArr = TypesWoC.split(",");
+		//Check Types from config
+		for (var a=0; a<TypeArr.length; a++) 
+		{
+			if(TypeArr[a] == "Tram")
+			{	
+                             tram = 0;
+                        }
+			if(TypeArr[a] == "Sub")
+			{	
+                             sub = 0;
+                        }
+			if(TypeArr[a] == "Bus")
+			{	
+                             bus = 0;
+                        }
+			if(TypeArr[a] == "Train")
+			{	
+                             train = 0;
+                        }
+		}
+		if (tram == 1 && cLTram == 0)
+		{
+			tram = 0;
+		}
+		if (sub == 1 && cLS == 0)
+		{
+			sub = 0;
+		}
+		if (bus == 1 && cLB == 0)
+		{
+			bus = 0;
+		}
+		if (train == 1 && cLTrain == 0)
+		{
+			train = 0;
+		}
+		if (tram + sub + bus + train==0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	},
 
 	Build_RowData: function (data) 
 	{

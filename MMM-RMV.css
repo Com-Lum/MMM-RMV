@@ -20,6 +20,11 @@
     	border-collapse: separate;
 	color: white;
 	}
+
+.MMM-RMV .blocked {
+	text-transform: capitalize;
+	font-weight: normal;
+	}
 	
 .MMM-RMV .lines {
     border-spacing: 10px 0px;
