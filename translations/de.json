@@ -14,5 +14,6 @@
   "CANCELLED": "Entfällt",
   "UNCLEAR": "Unklar",
   "ALL_BLOCKED": "Alle Verbindungen blockiert, Config anpassen",
-  "BLOCKED": "Blockierte Typen/Linien"
+  "BLOCKED": "Blockierte Typen/Linien",
+  "UNK": "UTM"
 }
