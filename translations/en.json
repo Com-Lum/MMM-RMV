@@ -14,5 +14,6 @@
   "CANCELLED": "Cancelled",
   "UNCLEAR": "Unclear",
   "ALL_BLOCKED": "All connections blocked, modify config",
-  "BLOCKED": "Blocked types/lines"
+  "BLOCKED": "Blocked types/lines",
+  "UNK": "UTS"
 }
