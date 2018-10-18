@@ -83,12 +83,12 @@ Module.register("MMM-RMV", {
 	}
 	
 	// splits the different transport types	
-	
-	var coll = document.createElement("div");
-        var headerGen = document.createElement("header");
-	headerGen.className = "type";
-        headerGen.innerHTML = this.translate("UNKNOWN");
-        coll.appendChild(headerGen);
+
+	var collUnk = document.createElement("div");
+        var headerUnk = document.createElement("header");
+	headerUnk.className = "type";
+        headerUnk.innerHTML = this.translate("UNKNOWN");
+        collUnk.appendChild(headerUnk);
 
 	var collTram = document.createElement("div");
 	var headerTram = document.createElement("header");
@@ -136,6 +136,7 @@ Module.register("MMM-RMV", {
 	     var tableSub = document.createElement("table");
 	     var tableBus = document.createElement("table");
 	     var tableTrain = document.createElement("table");
+	     var tableUnk = document.createElement("table");
 	     
 	     table.classList.add("small", "table");
 	     table.border='0';
@@ -146,7 +147,9 @@ Module.register("MMM-RMV", {
 	     tableSub.classList.add("small", "table");
 	     tableSub.border='0';
 	     tableTrain.classList.add("small", "table");
-	     tableTrain.border='0';	     
+	     tableTrain.border='0';	  
+	     tableUnk.classList.add("small", "table");
+	     tableUnk.border='0';	   
 	
 								
 	     // check if connections are available and sort by train / tram / sub / bus
@@ -236,7 +239,7 @@ Module.register("MMM-RMV", {
 		collector.appendChild(this.Build_RowSp());
 		if (countedLines > 0)
 		{	
-			table.appendChild(this.Build_LabelRow());	
+			tableUnk.appendChild(this.Build_LabelRow());	
 		}
 		if (countedLinesTram > 0)
 		{	
@@ -309,7 +312,7 @@ Module.register("MMM-RMV", {
 					{
 					  	if (countedLines < this.config.maxC)
 						{
-							table.appendChild(this.Build_RowData(trains));							
+							tableUnk.appendChild(this.Build_RowData(trains));							
 							countedLines = countedLines + 1;
 						}
 					}
@@ -352,7 +355,7 @@ Module.register("MMM-RMV", {
 					{
 					  	if (countedLines < this.config.maxC)
 						{
-							table.appendChild(this.Build_RowData(trains));							
+							tableUnk.appendChild(this.Build_RowData(trains));							
 							countedLines = countedLines + 1;
 						}
 					}
@@ -400,7 +403,7 @@ Module.register("MMM-RMV", {
 				{
 					if (countedLines < this.config.maxC)
 					{
-						table.appendChild(this.Build_RowData(trains));							
+						tableUnk.appendChild(this.Build_RowData(trains));							
 						countedLines = countedLines + 1;
 					}
 				}
@@ -443,7 +446,7 @@ Module.register("MMM-RMV", {
 				{
 					if (countedLines < this.config.maxC)
 					{
-						table.appendChild(this.Build_RowData(trains));							
+						tableUnk.appendChild(this.Build_RowData(trains));							
 						countedLines = countedLines + 1;
 					}
 				}
@@ -454,6 +457,7 @@ Module.register("MMM-RMV", {
 		
 	// adds the tables which contain connections to the main display
 	
+
 	    if (countedLines + countedLinesTram + countedLinesSub + countedLinesBus + countedLinesTrain == 0) 
 	    {			
 		if (!this.hidden) 
@@ -480,19 +484,19 @@ Module.register("MMM-RMV", {
 		}
 		if (countedLines == 0 || this.rmvType("Unk")) 
 		{	
-			if (!coll.hidden) 
+			if (!collUnk.hidden) 
 			{
-				table.appendChild(this.Build_NoConRow());
-				coll.appendChild(table);
-				coll.style.display = 'none';	
+				tableUnk.appendChild(this.Build_NoConRow());
+				collUnk.appendChild(tableUnk);
+				collUnk.style.display = 'none';	
 			}
 		}
 		else
 		{
-			if (coll.hidden) 
-			{	coll.show(5000);	} 
-			table.appendChild(this.Build_RowSp());
-			coll.appendChild(table);
+			if (collUnk.hidden) 
+			{	collUnk.show(5000);	} 
+			tableUnk.appendChild(this.Build_RowSp());
+			collUnk.appendChild(tableUnk);
 		}
 		if (countedLinesTram == 0 || this.rmvType("Tram")) 
 		{	
@@ -561,7 +565,7 @@ Module.register("MMM-RMV", {
 			tableTrain.appendChild(this.Build_RowSp());
 			collTrain.appendChild(tableTrain);
 		}
-		collector.appendChild(coll);	
+		collector.appendChild(collUnk);	
      		collector.appendChild(this.Build_RowSp());
 		collector.appendChild(collTram);
      		collector.appendChild(this.Build_RowSp());
