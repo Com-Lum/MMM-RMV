@@ -21,7 +21,7 @@ v1.0.3: Minor Bug Fixing, 23-0 hour problems, no RTD available, ...<br>
 v1.0.4: Switch-option added in config to switch between all departures of the station and only interested ones(see Notes and Options)<br>
 v1.0.5: Ignoring transport types added<br>
 v1.0.5.1: update of Ignoring transport types<br>
-v1.0.6: maxJourneys added, Bugfixing
+v1.0.6: maxJourneys added, Bugfixing<br>
 <b>Note</b>:
 
 ## Translation
