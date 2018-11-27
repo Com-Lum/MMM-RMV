@@ -4,7 +4,7 @@
  * By Com-Lum / https://github.com/Com-Lum
  * MIT Licensed.
  * 
- * v1.0.4
+ * v1.0.6
  */
 
 Module.register("MMM-RMV", {
@@ -25,15 +25,16 @@ Module.register("MMM-RMV", {
 		labelRow: true,
 		showblocked: false,
 		stopName: 'RMV',
+		maxJ: 50,
 		maxT: 60,
         	updateInterval: 1 * 60 * 1000,       // every minute
     },
 
     getTranslations: function () {
-        return {
-            en: "translations/en.json",
-            de: "translations/de.json"
-        };
+	        return {
+	            en: "translations/en.json",
+	            de: "translations/de.json"
+	        };
     },
 
     getStyles: function () {
@@ -59,7 +60,7 @@ Module.register("MMM-RMV", {
 	    this.rmv_data = payload;
 	    this.config.stopName = this.rmv_data.Departure[0].stop;
 	    this.updateDom();
-	    //console.log(payload);	//see recieved data	
+	    console.log(payload);	//see recieved data	
 	}
     },
 
