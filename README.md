@@ -120,7 +120,7 @@ The correct station name is in column 'E'.<br>
 | fDestination5<BR>`optional` | | <BR>The final stop of the train line has to be added here! (station name) |
 | maxT<BR>`optional` | 60 | <BR>Displayed Time Frame <BR><EM><B>Note</B>: only the lines within this time frame will be displayed.</EM><P> |
 | maxC<BR>`optional` | 15 | <BR>Maximum displayed lines <BR><EM><B>Note</B>: only the lines within a time frame of 1 hours (default) will be displayed. If there less lines than the limit only the available lines will be displayed</EM><P> |
-| maxJ<BR>`optional` | 50 | <BR>Maximum requested lines <B>Only for stationID's which are main transport hubs</B> <BR><EM><B>Note</B>: In case of many incoming trains in a short time the limit for requested connections <BR> can be increased in order to show more rare routes up to the limits  of MaxC and MaxT</EM><P> |
+| maxJ<BR>`optional` | 50 | <BR>Maximum requested lines <Br><B>Only for stationID's which are main transport hubs</B> <BR><EM><B>Note</B>: In case of many incoming trains in a short time the limit for requested connections can be increased in order to show more rare routes up to the limits  of MaxC and MaxT</EM><P> |
 | lines<BR>`optional` |  | <BR> Specific lines will be ignored (add commas between the lines)(For all trams with number >9 a "Tram" needs to be added before the number)<BR><EM> Example: 'S8, S1,Tram11' </BR></E><P> |
 | Ctype<BR>`optional` |  | <BR> Specific transport types will be ignored (add commas between the types)<BR><EM> Example: 'Tram, Train,Sub,Bus,Unk' </BR></E><P> |
 | labelRow<BR>`optional` | true | <BR> Show or hide column headers<BR> <P> |
