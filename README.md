@@ -22,6 +22,7 @@ v1.0.4: Switch-option added in config to switch between all departures of the st
 v1.0.5: Ignoring transport types added<br>
 v1.0.5.1: update of Ignoring transport types<br>
 v1.0.6: maxJourneys added, Bugfixing<br>
+v1.0.7: Config-option delayLimit added, new color for cancelled connections<br>
 <b>Note</b>:
 
 ## Translation
@@ -78,22 +79,23 @@ As similar to other modules:
         module: 'MMM-RMV',
         position: 'top_right',
         config: {
-			apiKey: '', // see chapter below
-			stationId: '', 	
-			fDest: true, // see chapter below
-			fDestination1: '', 
-			fDestination2: '', // The final destination of the train will be displayed for each line.
-			fDestination3: '', 
-			fDestination4: '', 
-			fDestination5: '',
-			maxT: 60, 	
-			maxJ: 50, // requested connections from server (includes all departures for the current station)
-			maxC: 6, // maximum displayed connections (standard = 15) out of the requested Journeys
-			lines: '', // These lines will be ignored
-			Ctype: '', // These transport types will be ignored "Tram,Bus,Sub,Train,Unk"
-			labelRow: true, // Show or hide column headers
-			showblocked: false, // Show the blocked transport types/lines in a separate line
-		    	updateInterval: '1 * 60 * 1000' // default: once per minute
+		apiKey: '', // see chapter below
+		stationId: '',
+		labelRow: true,
+		delayLimit: 0, // all delays above this limit will be displayed in red with the delay in brackets
+		fDest: 'true', // see chapter below
+		fDestination1: '', 
+		fDestination2: '', // The final destination of the train will be displayed for each line.
+		fDestination3: '', 
+		fDestination4: '', 
+		fDestination5: '',
+		lines: '', // These lines will be ignored
+		Ctype: '', // These transport types will be ignored "Tram,Bus,Sub,Train,Unk"
+		showblocked: false, // Show the blocked transport types/lines in a separate line
+		maxC: 15, // maximum displayed connections (standard = 15) out of the requested Journeys
+		maxT: 60, // time frame for the listed connections
+		maxJ: 50, // requested connections from server (includes all departures for the current station)
+        	updateInterval: '1 * 60 * 1000' // default: once per minute
         }
     }
     
@@ -112,19 +114,20 @@ The correct station name is in column 'E'.<br>
 | **Option** | **Default** | **Description** |
 | :---: | :---: | --- |
 | stationId | 30000001 | <BR>Choose your departure station<BR><EM> default value: '30000001' - 'Frankfurt (Main) Hauptwache'</EM><P> |
+| labelRow<BR>`optional` | true | <BR> Show or hide column headers<BR> <P> |
+| delayLimit<BR>`optional` | 0 | <BR> all delays above this limit will be displayed in red and delay in brackets<BR> <P> |
 | fDest<BR>`optional`| true | <BR>true: only departures with final destination specified in the "fDestination"'s. <BR>false: all departures of the station will be shown<P> |
 | fDestination1 | 'Frankfurt (Main) Hauptbahnhof' | <BR>The final stop of the train line has to be added here! (station name)<BR><EM>default value: 'Frankfurt (Main) Hauptbahnhof'</EM><P> |
 | fDestination2 |'Frankfurt (Main) Flughafen Regionalbahnhof' | <BR>The final stop of the train line has to be added here! (station name)<BR><EM>default value: 'Frankfurt (Main) Flughafen Regionalbahnhof'</EM><P> |
 | fDestination3<BR>`optional` | | <BR>The final stop of the train line has to be added here! (station name) |
 | fDestination4<BR>`optional` | | <BR>The final stop of the train line has to be added here! (station name) |
 | fDestination5<BR>`optional` | | <BR>The final stop of the train line has to be added here! (station name) |
-| maxT<BR>`optional` | 60 | <BR>Displayed Time Frame <BR><EM><B>Note</B>: only the lines within this time frame will be displayed.</EM><P> |
-| maxC<BR>`optional` | 15 | <BR>Maximum displayed lines <BR><EM><B>Note</B>: only the lines within a time frame of 1 hours (default) will be displayed. If there less lines than the limit only the available lines will be displayed</EM><P> |
-| maxJ<BR>`optional` | 50 | <BR>Maximum requested lines <Br><B>Only for stationID's which are main transport hubs</B> <BR><EM><B>Note</B>: In case of many incoming trains in a short time the limit for requested connections can be increased in order to show more rare routes up to the limits  of MaxC and MaxT</EM><P> |
 | lines<BR>`optional` |  | <BR> Specific lines will be ignored (add commas between the lines)(For all trams with number >9 a "Tram" needs to be added before the number)<BR><EM> Example: 'S8, S1,Tram11' </BR></E><P> |
 | Ctype<BR>`optional` |  | <BR> Specific transport types will be ignored (add commas between the types)<BR><EM> Example: 'Tram, Train,Sub,Bus,Unk' </BR></E><P> |
-| labelRow<BR>`optional` | true | <BR> Show or hide column headers<BR> <P> |
 | showblocked<BR>`optional` | false | <BR> Show or hide a line with all blocked transport types/lines<BR> <P> |
+| maxC<BR>`optional` | 15 | <BR>Maximum displayed lines <BR><EM><B>Note</B>: only the lines within a time frame of 1 hours (default) will be displayed. If there less lines than the limit only the available lines will be displayed</EM><P> |
+| maxT<BR>`optional` | 60 | <BR>Displayed Time Frame <BR><EM><B>Note</B>: only the lines within this time frame will be displayed.</EM><P> |
+| maxJ<BR>`optional` | 50 | <BR>Maximum requested lines <Br><B>Only for stationID's which are main transport hubs</B> <BR><EM><B>Note</B>: In case of many incoming trains in a short time the limit for requested connections can be increased in order to show more rare routes up to the limits  of MaxC and MaxT</EM><P> |
 | updateInterval<BR>`optional`  | '60000' | <BR> Update interval in milliseconds <BR><EM> default: Once per minute </EM><P> |
 
 

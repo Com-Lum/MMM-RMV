@@ -4,7 +4,7 @@
  * By Com-Lum / https://github.com/Com-Lum
  * MIT Licensed.
  * 
- * v1.0.6
+ * v1.0.7
  */
 
 Module.register("MMM-RMV", {
@@ -12,21 +12,22 @@ Module.register("MMM-RMV", {
     defaults: {
 		apiUrl: 'https://www.rmv.de/hapi/departureBoard?accessId=',
 		apiKey: '',
+		stopName: 'RMV',
 		stationId: '3000001',
-		maxC: 15,
-		lines: '', // "S1, U1,Tram 11"
-		Ctype: '', // "Bus" "Tram" "Sub" "Train" "Unk"
+		labelRow: true,
+		delayLimit: 0,
 		fDest: 'true',
 		fDestination1: 'Frankfurt (Main) Hauptbahnhof',
 		fDestination2: 'Frankfurt (Main) Flughafen Regionalbahnhof',
 		fDestination3: '',
 		fDestination4: '',
 		fDestination5: '',
-		labelRow: true,
+		lines: '', // "S1, U1,Tram 11"
+		Ctype: '', // "Bus" "Tram" "Sub" "Train" "Unk"
 		showblocked: false,
-		stopName: 'RMV',
-		maxJ: 50,
+		maxC: 15,
 		maxT: 60,
+		maxJ: 50,
         	updateInterval: 1 * 60 * 1000,       // every minute
     },
 
@@ -850,7 +851,7 @@ Module.register("MMM-RMV", {
 			}
 		}
 		
-		if (Late == 0 && data.reachable == true)
+		if (Late <= this.config.delayLimit && data.reachable == true)
 		{
 			var departure = document.createElement("td");
 			departure.className = "departure";
@@ -904,7 +905,7 @@ Module.register("MMM-RMV", {
 		else
 		{
 			var departure = document.createElement("td");
-			departure.className = "departure";
+			departure.className = "departureCancelled";
 			departure.innerHTML = this.translate("CANCELLED");
 		}
 		DataRow.appendChild(departure);

@@ -47,6 +47,13 @@
 	font-weight: normal;
 	color: red;
 	}
+
+.MMM-RMV .departureCancelled {
+	padding-left: 10px;
+	text-align: right;
+	font-weight: normal;
+	color: orange;
+	}
 	
 .MMM-RMV .NoConRow {
 	font-weight: normal;
