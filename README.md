@@ -23,6 +23,7 @@ v1.0.5: Ignoring transport types added<br>
 v1.0.5.1: update of Ignoring transport types<br>
 v1.0.6: maxJourneys added, Bugfixing<br>
 v1.0.7: Config-option delayLimit added, new color for cancelled connections<br>
+v1.0.8: Config-options added to reduce height for running multiple instances<br>
 <b>Note</b>:
 
 ## Translation
@@ -52,8 +53,10 @@ As similar to other modules:
 
 ## Configuration
 
-<b>Important: "fDestination" does not mean the arrival station which you are interested in!</b>
-<b>It has to be the final destination of the transport line!</b>
+<b>Important: "fDestination" does not mean the arrival station which you are interested in!</b><br>
+<b>It has to be the final destination of the transport line!</b><br>
+An easy way for finding out the transport routes is to set "fDest" to false and check out what the module is displaying for the different transport types.<br>
+
 
 1. minimum configuration within `config.js`:
 
@@ -81,6 +84,8 @@ As similar to other modules:
         config: {
 		apiKey: '', // see chapter below
 		stationId: '',
+		labelStation: true, // adds the departure station as header
+		labelType: true, // adds a line with the connection type (for each type)
 		labelRow: true,
 		delayLimit: 0, // all delays above this limit will be displayed in red with the delay in brackets
 		fDest: 'true', // see chapter below
@@ -114,6 +119,8 @@ The correct station name is in column 'E'.<br>
 | **Option** | **Default** | **Description** |
 | :---: | :---: | --- |
 | stationId | 30000001 | <BR>Choose your departure station<BR><EM> default value: '30000001' - 'Frankfurt (Main) Hauptwache'</EM><P> |
+| labelStation<BR>`optional` | true | <BR> Show or hide header with departure station name <BR> <P> |
+| labelType<BR>`optional` | true | <BR> Show or hide a line for each connection type (only available connections)<BR> <P> |
 | labelRow<BR>`optional` | true | <BR> Show or hide column headers<BR> <P> |
 | delayLimit<BR>`optional` | 0 | <BR> all delays above this limit will be displayed in red and delay in brackets<BR> <P> |
 | fDest<BR>`optional`| true | <BR>true: only departures with final destination specified in the "fDestination"'s. <BR>false: all departures of the station will be shown<P> |

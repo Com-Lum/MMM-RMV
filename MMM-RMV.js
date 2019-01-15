@@ -4,7 +4,7 @@
  * By Com-Lum / https://github.com/Com-Lum
  * MIT Licensed.
  * 
- * v1.0.7
+ * v1.0.8
  */
 
 Module.register("MMM-RMV", {
@@ -14,6 +14,8 @@ Module.register("MMM-RMV", {
 		apiKey: '',
 		stopName: 'RMV',
 		stationId: '3000001',
+		labelStation: true,
+		labelType: true,
 		labelRow: true,
 		delayLimit: 0,
 		fDest: 'true',
@@ -61,7 +63,7 @@ Module.register("MMM-RMV", {
 	    this.rmv_data = payload;
 	    this.config.stopName = this.rmv_data.Departure[0].stop;
 	    this.updateDom();
-	    console.log(payload);	//see recieved data	
+	    //console.log(payload);	//see recieved data	
 	}
     },
 
@@ -70,9 +72,12 @@ Module.register("MMM-RMV", {
 	// adds the station name as header	
 
 	var collector = document.createElement("div");
+	if (this.config.labelStation == true)
+	{
         var header = document.createElement("header");
         header.innerHTML = this.config.stopName;
         collector.appendChild(header);
+	}
 
 	// lists the blocked types and lines
 
@@ -87,37 +92,39 @@ Module.register("MMM-RMV", {
 	// splits the different transport types	
 
 	var collUnk = document.createElement("div");
-        var headerUnk = document.createElement("header");
-	headerUnk.className = "type";
-        headerUnk.innerHTML = this.translate("UNKNOWN");
-        collUnk.appendChild(headerUnk);
-
 	var collTram = document.createElement("div");
-	var headerTram = document.createElement("header");
-	headerTram.className = "type";
-	headerTram.innerHTML = this.translate("TRAM");
-        collTram.appendChild(headerTram);
-
 	var collSub = document.createElement("div");
-	var headerSub = document.createElement("header");
-	headerSub.className = "type";
-	headerSub.innerHTML = this.translate("SUB");
-        collSub.appendChild(headerSub);
-
 	var collBus = document.createElement("div");
-	var headerBus = document.createElement("header");
-	headerBus.className = "type";
-	headerBus.innerHTML = this.translate("BUS");
-        collBus.appendChild(headerBus);
-
 	var collTrain = document.createElement("div");
-	var headerTrain = document.createElement("header");
-	headerTrain.className = "type";
-	headerTrain.innerHTML = this.translate("TRAIN");
-        collTrain.appendChild(headerTrain);
 
+	if (this.config.labelType == true)
+	{
+	        var headerUnk = document.createElement("header");
+		headerUnk.className = "type";
+	        headerUnk.innerHTML = this.translate("UNKNOWN");
+        	collUnk.appendChild(headerUnk);
 
+		var headerTram = document.createElement("header");
+		headerTram.className = "type";
+		headerTram.innerHTML = this.translate("TRAM");
+        	collTram.appendChild(headerTram);
+
+		var headerSub = document.createElement("header");
+		headerSub.className = "type";
+		headerSub.innerHTML = this.translate("SUB");
+	        collSub.appendChild(headerSub);
+
+		var headerBus = document.createElement("header");
+		headerBus.className = "type";
+		headerBus.innerHTML = this.translate("BUS");
+	        collBus.appendChild(headerBus);
 	
+		var headerTrain = document.createElement("header");
+		headerTrain.className = "type";
+		headerTrain.innerHTML = this.translate("TRAIN");
+        	collTrain.appendChild(headerTrain);
+	}
+
 	// Loading data notification
 		
 	if (!this.rmv_data) 
