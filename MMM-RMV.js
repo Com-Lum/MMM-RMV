@@ -4,7 +4,7 @@
  * By Com-Lum / https://github.com/Com-Lum
  * MIT Licensed.
  * 
- * v1.0.8
+ * v1.0.9
  */
 
 Module.register("MMM-RMV", {
@@ -18,6 +18,8 @@ Module.register("MMM-RMV", {
 		labelType: true,
 		labelRow: true,
 		delayLimit: 0,
+		relativTime: true,
+		reduceD: false,
 		fDest: 'true',
 		fDestination1: 'Frankfurt (Main) Hauptbahnhof',
 		fDestination2: 'Frankfurt (Main) Flughafen Regionalbahnhof',
@@ -30,6 +32,7 @@ Module.register("MMM-RMV", {
 		maxC: 15,
 		maxT: 60,
 		maxJ: 50,
+		relT: 45,
         	updateInterval: 1 * 60 * 1000,       // every minute
     },
 
@@ -796,15 +799,53 @@ Module.register("MMM-RMV", {
 		//
 	        var destination = document.createElement("td");
 		var dest = data.direction
-		dest = dest.replace("(Main)", "");
-		if (dest.length > 20)
-		{	
-			dest = dest.replace("Frankfurt", "");	
+		if (this.config.reduceD)
+		{
+			dest = dest.replace("(Main)", "");
+			dest = dest.replace("(Taunus)", "");
+			dest = dest.replace("(Lahn)", "");
+			dest = dest.replace("(Hessen)", "");
+			dest = dest.replace("(Odw.)", "");
+			dest = dest.replace("(Westerwald)", "");
+			dest = dest.replace("(Rhein)", "");
+			dest = dest.replace("(Lumda)", "");
+			dest = dest.replace("(Wetterau)", "");
+			dest = dest.replace("(Vogelsberg)", "");
+			dest = dest.replace("(Felda)", "");
+			dest = dest.replace("(Rhön)", "");
+			dest = dest.replace("(Wasserkuppe)", "");
+			dest = dest.replace("(Ohm)", "");
+			dest = dest.replace("v.d.H.", "");
 		}
 		if (dest.length > 20)
 		{	
 			dest = dest.replace("Hauptbahnhof", "Hbf")
 			dest = dest.replace("Bahnhof", "Bf")
+		}
+		if (dest.length > 20)
+		{	
+			dest = dest.replace("Straße", "Str.");	
+			dest = dest.replace("straße", "str.");	
+		}
+		if (dest.length > 25)
+		{	
+			dest = dest.replace("Frankfurt", "F-");	
+		}
+
+		if (dest.length > 30 && this.config.reduceD)
+		{	
+			dest = dest.replace("Wiesbaden", "Wi-");	
+			dest = dest.replace("Offenbach", "Of-");
+			dest = dest.replace("Liederbach", "Li-");
+			dest = dest.replace("Neu-Isenburg", "NI-");
+			dest = dest.replace("Mörfelden-Walldorf", "M-W-");
+			dest = dest.replace("Rödermark", "Rö-");
+			dest = dest.replace("Rodgau", "Ro-");
+			dest = dest.replace("Seligenstadt", "Se-");
+			dest = dest.replace("Rüsselsheim", "Rü-");
+			dest = dest.replace("Steinau an der Str.", "Steinau");
+			dest = dest.replace("Niedernhausen", "Ni-");
+			dest = dest.replace("Bad Homburg", "BHom-");
 		}
 	        destination.innerHTML = dest;
         	DataRow.appendChild(destination);
@@ -858,65 +899,177 @@ Module.register("MMM-RMV", {
 			}
 		}
 		
-		if (Late <= this.config.delayLimit && data.reachable == true)
+
+		if (this.config.relativTime)
 		{
-			var departure = document.createElement("td");
-			departure.className = "departure";
-			if (DifTime == 0)
-			{	departure.innerHTML = this.translate("NOW");	}
-			else if (DifTime == 1)
-			{	departure.innerHTML = 'In 1 ' + this.translate("MINUTE");	}
-			else if (DifTime < 45) 
-			{	departure.innerHTML = 'In ' + DifTime + ' ' + this.translate("MINUTES");	}
-			else
-			{	
-				if (AddHour)
-				{	
-					if (dataMin < 10)
-					{ dataMin = '0' + dataMin; }
-					departure.innerHTML = (parseInt(dataHour,10) - 24) + ':' + dataMin;	
-				}
+			if (Late <= this.config.delayLimit && data.reachable == true)
+			{
+				var departure = document.createElement("td");
+				departure.className = "departure";
+				if (DifTime == 0)
+				{	departure.innerHTML = this.translate("NOW");	}
+				else if (DifTime == 1)
+				{	departure.innerHTML = 'In 1 ' + this.translate("MINUTE");	}
+				else if (DifTime < this.config.relT) 
+				{	departure.innerHTML = 'In ' + DifTime + ' ' + this.translate("MINUTES");	}
 				else
-				{
-					departure.innerHTML = dataTime;	
+				{	
+					if (AddHour)
+					{	
+						if (dataMin < 10)
+						{ dataMin = '0' + dataMin; }
+						departure.innerHTML = (parseInt(dataHour,10) - 24) + ':' + dataMin;	
+					}
+					else
+					{
+						departure.innerHTML = dataTime;	
+					}
+				}
+			} 
+			else if (data.reachable == true)
+			{
+				var departure = document.createElement("td");
+				departure.className = "departureLate";
+			        if (DifTime == 0)
+				{	departure.innerHTML = this.translate("NOW") + ' (+' + Late + ')';	}
+				else if (DifTime == 1) 
+				{	departure.innerHTML = 'In 1 ' + this.translate("MINUTE") + ' (+' + Late + ')';	} 
+				else if (DifTime < this.config.relT && data.rtTime) 
+				{	departure.innerHTML = 'In ' + DifTime + ' ' + this.translate("MINUTES")+ ' (+' + Late + ')';	} 
+				else if (Late > 30 && !data.rtTime)
+				{	departure.innerHTML = this.translate("UNCLEAR")+ ' (+' + Late + ')';	}
+				else 
+				{	
+					if (AddHour)
+					{	
+						if (dataMin < 10)
+						{ dataMin = '0' + dataMin; }
+						
+						departure.innerHTML = (parseInt(dataHour,10) - 24) + ':' + dataMin + ' (+' + Late + ')';	
+					}
+					else
+					{
+						departure.innerHTML = dataTime + ' (+' + Late + ')';
+					}
 				}
 			}
-		} 
-		else if (data.reachable == true)
-		{
-			var departure = document.createElement("td");
-			departure.className = "departureLate";
-		        if (DifTime == 0)
-			{	departure.innerHTML = this.translate("NOW") + ' (+' + Late + ')';	}
-			else if (DifTime == 1) 
-			{	departure.innerHTML = 'In 1 ' + this.translate("MINUTE") + ' (+' + Late + ')';	} 
-			else if (DifTime < 45 && data.rtTime) 
-			{	departure.innerHTML = 'In ' + DifTime + ' ' + this.translate("MINUTES")+ ' (+' + Late + ')';	} 
-			else if (Late > 30 && !data.rtTime)
-			{	departure.innerHTML = this.translate("UNCLEAR")+ ' (+' + Late + ')';	}
-			else 
-			{	
-				if (AddHour)
-				{	
-					if (dataMin < 10)
-					{ dataMin = '0' + dataMin; }
-					
-					departure.innerHTML = (parseInt(dataHour,10) - 24) + ':' + dataMin + ' (+' + Late + ')';	
-				}
-				else
-				{
-					departure.innerHTML = dataTime + ' (+' + Late + ')';
-				}
+			else
+			{
+				var departure = document.createElement("td");
+				departure.className = "departureCancelled";
+				departure.innerHTML = this.translate("CANCELLED");
 			}
 		}
 		else
 		{
-			var departure = document.createElement("td");
-			departure.className = "departureCancelled";
-			departure.innerHTML = this.translate("CANCELLED");
+			if (this.config.relT == 0)
+			{
+				if (Late <= this.config.delayLimit && data.reachable == true)
+				{
+					var departure = document.createElement("td");
+					departure.className = "departure";
+					if (AddHour)
+					{	
+						if (dataMin < 10)
+						{ dataMin = '0' + dataMin; }
+						departure.innerHTML = (parseInt(dataHour,10) - 24) + ':' + dataMin;	
+					}
+					else
+					{
+						departure.innerHTML = dataTime;	
+					}
+				} 
+				else if (data.reachable == true)
+				{
+					var departure = document.createElement("td");
+					departure.className = "departureLate";
+					if (Late > 30 && !data.rtTime)
+					{	departure.innerHTML = this.translate("UNCLEAR")+ ' (+' + Late + ')';	}
+					else 
+					{	
+						if (AddHour)
+						{	
+							if (dataMin < 10)
+							{ dataMin = '0' + dataMin; }
+							
+							departure.innerHTML = (parseInt(dataHour,10) - 24) + ':' + dataMin + ' (+' + Late + ')';	
+						}
+						else
+						{
+							departure.innerHTML = dataTime + ' (+' + Late + ')';
+						}
+					}
+				}
+				else
+				{
+					var departure = document.createElement("td");
+					departure.className = "departureCancelled";
+					departure.innerHTML = this.translate("CANCELLED");
+				}
+			}
+			else
+			{
+				if (Late <= this.config.delayLimit && data.reachable == true)
+				{
+					var departure = document.createElement("td");
+					departure.className = "departure";
+					if (DifTime == 0)
+					{	departure.innerHTML = this.translate("NOW");	}
+					else if (DifTime == 1 && DifTime < this.config.relT)
+					{	departure.innerHTML = 'In 1 ' + this.translate("MINUTE");	}
+					else if (DifTime < this.config.relT) 
+					{	departure.innerHTML = 'In ' + DifTime + ' ' + this.translate("MINUTES");	}
+					else
+					{	
+						if (AddHour)
+						{	
+							if (dataMin < 10)
+							{ dataMin = '0' + dataMin; }
+							departure.innerHTML = (parseInt(dataHour,10) - 24) + ':' + dataMin;	
+						}
+						else
+						{
+							departure.innerHTML = dataTime;	
+						}
+					}
+				} 
+				else if (data.reachable == true)
+				{
+					var departure = document.createElement("td");
+					departure.className = "departureLate";
+				        if (DifTime == 0)
+					{	departure.innerHTML = this.translate("NOW") + ' (+' + Late + ')';	}
+					else if (DifTime == 1 && DifTime < this.config.relT) 
+					{	departure.innerHTML = 'In 1 ' + this.translate("MINUTE") + ' (+' + Late + ')';	} 
+					else if (DifTime < this.config.relT && data.rtTime) 
+					{	departure.innerHTML = 'In ' + DifTime + ' ' + this.translate("MINUTES")+ ' (+' + Late + ')';	} 
+					else if (Late > 30 && !data.rtTime)
+					{	departure.innerHTML = this.translate("UNCLEAR")+ ' (+' + Late + ')';	}
+					else 
+					{	
+						if (AddHour)
+						{	
+							if (dataMin < 10)
+							{ dataMin = '0' + dataMin; }
+							
+							departure.innerHTML = (parseInt(dataHour,10) - 24) + ':' + dataMin + ' (+' + Late + ')';	
+						}
+						else
+						{
+							departure.innerHTML = dataTime + ' (+' + Late + ')';
+						}
+					}
+				}
+				else
+				{
+					var departure = document.createElement("td");
+					departure.className = "departureCancelled";
+					departure.innerHTML = this.translate("CANCELLED");
+				}	
+			}
 		}
-		DataRow.appendChild(departure);
-		return DataRow;
+	DataRow.appendChild(departure);
+	return DataRow;
     	}
 }
 );

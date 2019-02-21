@@ -24,6 +24,7 @@ v1.0.5.1: update of Ignoring transport types<br>
 v1.0.6: maxJourneys added, Bugfixing<br>
 v1.0.7: Config-option delayLimit added, new color for cancelled connections<br>
 v1.0.8: Config-options added to reduce height for running multiple instances<br>
+v1.0.9: Config-options added to reduce Destination Length and to switch between absolute/relativ time<br>
 <b>Note</b>:
 
 ## Translation
@@ -82,11 +83,18 @@ An easy way for finding out the transport routes is to set "fDest" to false and 
         module: 'MMM-RMV',
         position: 'top_right',
         config: {
+
+
+
+
+
 		apiKey: '', // see chapter below
 		stationId: '',
 		labelStation: true, // adds the departure station as header
 		labelType: true, // adds a line with the connection type (for each type)
 		labelRow: true,
+		relativTime: true, // false: alsways absolute time see also relT
+		reduceD: false, // reduces length of destination name
 		delayLimit: 0, // all delays above this limit will be displayed in red with the delay in brackets
 		fDest: 'true', // see chapter below
 		fDestination1: '', 
@@ -101,6 +109,7 @@ An easy way for finding out the transport routes is to set "fDest" to false and 
 		maxT: 60, // time frame for the listed connections
 		maxJ: 50, // requested connections from server (includes all departures for the current station)
         	updateInterval: '1 * 60 * 1000' // default: once per minute
+		relT: 45, // uses absolute time above limit
         }
     }
     
@@ -122,6 +131,8 @@ The correct station name is in column 'E'.<br>
 | labelStation<BR>`optional` | true | <BR> Show or hide header with departure station name <BR> <P> |
 | labelType<BR>`optional` | true | <BR> Show or hide a line for each connection type (only available connections)<BR> <P> |
 | labelRow<BR>`optional` | true | <BR> Show or hide column headers<BR> <P> |
+| relativTime<BR>`optional` | true | <BR> switches off relative time (if relT = 0 completely, else above 'relT' limit)<BR> <P> |
+| reduceD<BR>`optional` | false | <BR> Reduces the Length of the destination name<BR> <P> |
 | delayLimit<BR>`optional` | 0 | <BR> all delays above this limit will be displayed in red and delay in brackets<BR> <P> |
 | fDest<BR>`optional`| true | <BR>true: only departures with final destination specified in the "fDestination"'s. <BR>false: all departures of the station will be shown<P> |
 | fDestination1 | 'Frankfurt (Main) Hauptbahnhof' | <BR>The final stop of the train line has to be added here! (station name)<BR><EM>default value: 'Frankfurt (Main) Hauptbahnhof'</EM><P> |
@@ -135,6 +146,7 @@ The correct station name is in column 'E'.<br>
 | maxC<BR>`optional` | 15 | <BR>Maximum displayed lines <BR><EM><B>Note</B>: only the lines within a time frame of 1 hours (default) will be displayed. If there less lines than the limit only the available lines will be displayed</EM><P> |
 | maxT<BR>`optional` | 60 | <BR>Displayed Time Frame <BR><EM><B>Note</B>: only the lines within this time frame will be displayed.</EM><P> |
 | maxJ<BR>`optional` | 50 | <BR>Maximum requested lines <Br><B>Only for stationID's which are main transport hubs</B> <BR><EM><B>Note</B>: In case of many incoming trains in a short time the limit for requested connections can be increased in order to show more rare routes up to the limits  of MaxC and MaxT</EM><P> |
+| relT<BR>`optional` | 45 | <BR> switches to absolute time above limit (see also 'relativTime'<BR> <P> |
 | updateInterval<BR>`optional`  | '60000' | <BR> Update interval in milliseconds <BR><EM> default: Once per minute </EM><P> |
 
 
