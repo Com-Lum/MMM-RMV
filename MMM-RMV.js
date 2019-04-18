@@ -13,7 +13,7 @@ Module.register("MMM-RMV", {
 		apiUrl: 'https://www.rmv.de/hapi/departureBoard?accessId=',
 		apiKey: '',
 		stopName: 'RMV',
-		stationId: '3000001',
+		stationId: '', // update required here
 		labelStation: true,
 		labelType: true,
 		labelRow: true,
@@ -21,8 +21,8 @@ Module.register("MMM-RMV", {
 		relativTime: true,
 		reduceD: false,
 		fDest: 'true',
-		fDestination1: 'Frankfurt (Main) Hauptbahnhof',
-		fDestination2: 'Frankfurt (Main) Flughafen Regionalbahnhof',
+		fDestination1: '', // update required here
+		fDestination2: '', // update required here
 		fDestination3: '',
 		fDestination4: '',
 		fDestination5: '',
