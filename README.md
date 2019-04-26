@@ -68,8 +68,8 @@ An easy way for finding out the transport routes is to set "fDest" to false and 
         position: 'top_right',
         config: {
                 apiKey: '', // see chapter below
-                stationId: '', // default is: '30000001' - 'Frankfurt (Main) Hauptwache'
-                fDestination1: '', // default is: 'Frankfurt (Main) Hauptbahnhof'
+                stationId: '', // for example: '3000001' - 'Frankfurt (Main) Hauptwache'
+                fDestination1: '', // for example 'Wiesbaden Hauptbahnhof' for S8/S9'
         }
     }
    
@@ -127,7 +127,7 @@ The correct station name is in column 'E'.<br>
 
 | **Option** | **Default** | **Description** |
 | :---: | :---: | --- |
-| stationId | 30000001 | <BR>Choose your departure station<BR><EM> default value: '30000001' - 'Frankfurt (Main) Hauptwache'</EM><P> |
+| stationId | | <BR>Choose your departure station<BR><EM> for example value: '3000001' - 'Frankfurt (Main) Hauptwache'</EM><P> |
 | labelStation<BR>`optional` | true | <BR> Show or hide header with departure station name <BR> <P> |
 | labelType<BR>`optional` | true | <BR> Show or hide a line for each connection type (only available connections)<BR> <P> |
 | labelRow<BR>`optional` | true | <BR> Show or hide column headers<BR> <P> |
@@ -135,8 +135,8 @@ The correct station name is in column 'E'.<br>
 | reduceD<BR>`optional` | false | <BR> Reduces the Length of the destination name<BR> <P> |
 | delayLimit<BR>`optional` | 0 | <BR> all delays above this limit will be displayed in red and delay in brackets<BR> <P> |
 | fDest<BR>`optional`| true | <BR>true: only departures with final destination specified in the "fDestination"'s. <BR>false: all departures of the station will be shown<P> |
-| fDestination1 | 'Frankfurt (Main) Hauptbahnhof' | <BR>The final stop of the train line has to be added here! (station name)<BR><EM>default value: 'Frankfurt (Main) Hauptbahnhof'</EM><P> |
-| fDestination2 |'Frankfurt (Main) Flughafen Regionalbahnhof' | <BR>The final stop of the train line has to be added here! (station name)<BR><EM>default value: 'Frankfurt (Main) Flughafen Regionalbahnhof'</EM><P> |
+| fDestination1 | | <BR>The final stop of the train line has to be added here! (station name)<BR><EM>for example value: 'Frankfurt (Main) Südbahnhof'</EM><P> |
+| fDestination2 | | <BR>The final stop of the train line has to be added here! (station name)<BR><EM>default value: 'Wiesbaden Hauptbahnhof'</EM><P> |
 | fDestination3<BR>`optional` | | <BR>The final stop of the train line has to be added here! (station name) |
 | fDestination4<BR>`optional` | | <BR>The final stop of the train line has to be added here! (station name) |
 | fDestination5<BR>`optional` | | <BR>The final stop of the train line has to be added here! (station name) |
