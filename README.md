@@ -83,11 +83,6 @@ An easy way for finding out the transport routes is to set "fDest" to false and 
         module: 'MMM-RMV',
         position: 'top_right',
         config: {
-
-
-
-
-
 		apiKey: '', // see chapter below
 		stationId: '',
 		labelStation: true, // adds the departure station as header
