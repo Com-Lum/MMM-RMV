@@ -14,17 +14,18 @@ Please feel free to contact me in case you have questions, comments or improveme
 The departure monitor displays all leaving trams/busses/trains for a given station. It is necessary to specify the station ID to define the departure station. To define the direction it is also necessary to add the final destination of the trains/busses/trams which you are interested in. The module will not display all departures of a station, only the departures for the given final destinations.
 
 ## Version:
-v1.0.0: First Release<br>
-v1.0.1: IgnoringLines added<br>
-v1.0.2: Displayed data is splitted into the different transport types<br>
-v1.0.3: Minor Bug Fixing, 23-0 hour problems, no RTD available, ...<br>
-v1.0.4: Switch-option added in config to switch between all departures of the station and only interested ones(see Notes and Options)<br>
-v1.0.5: Ignoring transport types added<br>
+v1.0.0:   First Release<br>
+v1.0.1:   IgnoringLines added<br>
+v1.0.2:   Displayed data is splitted into the different transport types<br>
+v1.0.3:   Minor Bug Fixing, 23-0 hour problems, no RTD available, ...<br>
+v1.0.4:   Switch-option added in config to switch between all departures of the station and only interested ones(see Notes and Options)<br>
+v1.0.5:   Ignoring transport types added<br>
 v1.0.5.1: update of Ignoring transport types<br>
-v1.0.6: maxJourneys added, Bugfixing<br>
-v1.0.7: Config-option delayLimit added, new color for cancelled connections<br>
-v1.0.8: Config-options added to reduce height for running multiple instances<br>
-v1.0.9: Config-options added to reduce Destination Length and to switch between absolute/relativ time<br>
+v1.0.6:   maxJourneys added, Bugfixing<br>
+v1.0.7:   Config-option delayLimit added, new color for cancelled connections<br>
+v1.0.8:   Config-options added to reduce height for running multiple instances<br>
+v1.0.9:   Config-options added to reduce Destination Length and to switch between absolute/relativ time<br>
+v1.0.10:  Config-option minT added. If the time [min] until the departure of the connection is below minT it will not be displayed.<br>
 <b>Note</b>:
 
 ## Translation
@@ -101,7 +102,8 @@ An easy way for finding out the transport routes is to set "fDest" to false and 
 		Ctype: '', // These transport types will be ignored "Tram,Bus,Sub,Train,Unk"
 		showblocked: false, // Show the blocked transport types/lines in a separate line
 		maxC: 15, // maximum displayed connections (standard = 15) out of the requested Journeys
-		maxT: 60, // time frame for the listed connections
+		maxT: 60, // maximum time frame for the listed connections
+		minT: 0, // if time in minutes until departure drops below this value the connection will not be displayed
 		maxJ: 50, // requested connections from server (includes all departures for the current station)
         	updateInterval: '1 * 60 * 1000' // default: once per minute
 		relT: 45, // uses absolute time above limit
@@ -140,6 +142,7 @@ The correct station name is in column 'E'.<br>
 | showblocked<BR>`optional` | false | <BR> Show or hide a line with all blocked transport types/lines<BR> <P> |
 | maxC<BR>`optional` | 15 | <BR>Maximum displayed lines <BR><EM><B>Note</B>: only the lines within a time frame of 1 hours (default) will be displayed. If there less lines than the limit only the available lines will be displayed</EM><P> |
 | maxT<BR>`optional` | 60 | <BR>Displayed Time Frame <BR><EM><B>Note</B>: only the lines within this time frame will be displayed.</EM><P> |
+| minT<BR>`optional` | 0 | <BR>Displayed Time Frame <BR><EM><B>Note</B>: If the time in minutes until departure drops below this value it will not be displayed</EM><P> |
 | maxJ<BR>`optional` | 50 | <BR>Maximum requested lines <Br><B>Only for stationID's which are main transport hubs</B> <BR><EM><B>Note</B>: In case of many incoming trains in a short time the limit for requested connections can be increased in order to show more rare routes up to the limits  of MaxC and MaxT</EM><P> |
 | relT<BR>`optional` | 45 | <BR> switches to absolute time above limit (see also 'relativTime'<BR> <P> |
 | updateInterval<BR>`optional`  | '60000' | <BR> Update interval in milliseconds <BR><EM> default: Once per minute </EM><P> |

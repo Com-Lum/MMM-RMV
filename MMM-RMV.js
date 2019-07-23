@@ -4,7 +4,7 @@
  * By Com-Lum / https://github.com/Com-Lum
  * MIT Licensed.
  * 
- * v1.0.9
+ * v1.0.10
  */
 
 Module.register("MMM-RMV", {
@@ -31,6 +31,7 @@ Module.register("MMM-RMV", {
 		showblocked: false,
 		maxC: 15,
 		maxT: 60,
+		minT: 0,
 		maxJ: 50,
 		relT: 45,
         	updateInterval: 1 * 60 * 1000,       // every minute
@@ -70,16 +71,16 @@ Module.register("MMM-RMV", {
 	}
     },
 
-    getDom: function () 
-    {	
+getDom: function () 
+{	
 	// adds the station name as header	
 
 	var collector = document.createElement("div");
 	if (this.config.labelStation == true)
-	{
-        var header = document.createElement("header");
-        header.innerHTML = this.config.stopName;
-        collector.appendChild(header);
+	{	
+		var header = document.createElement("header");
+		header.innerHTML = this.config.stopName;
+		collector.appendChild(header);
 	}
 
 	// lists the blocked types and lines
@@ -93,7 +94,7 @@ Module.register("MMM-RMV", {
 	}
 	
 	// splits the different transport types	
-
+	
 	var collUnk = document.createElement("div");
 	var collTram = document.createElement("div");
 	var collSub = document.createElement("div");
@@ -132,340 +133,389 @@ Module.register("MMM-RMV", {
 		
 	if (!this.rmv_data) 
 	{
-	     var note = document.createElement("div");
-	     note.innerHTML = this.translate("Loading data");
-	     note.className = "small dimmed";
-             collector.appendChild(note);
-        
+		var note = document.createElement("div");
+		note.innerHTML = this.translate("Loading data");
+		note.className = "small dimmed";
+		collector.appendChild(note);
 	}
 	else
 	{
 
-	// Start creating connections tables
+		// Start creating connections tables
 			
-	     var table = document.createElement("table");
-	     var tableTram = document.createElement("table");
-	     var tableSub = document.createElement("table");
-	     var tableBus = document.createElement("table");
-	     var tableTrain = document.createElement("table");
-	     var tableUnk = document.createElement("table");
-	     
-	     table.classList.add("small", "table");
-	     table.border='0';
-	     tableBus.classList.add("small", "table");
-	     tableBus.border='0';
-	     tableTram.classList.add("small", "table");
-	     tableTram.border='0';
-	     tableSub.classList.add("small", "table");
-	     tableSub.border='0';
-	     tableTrain.classList.add("small", "table");
-	     tableTrain.border='0';	  
-	     tableUnk.classList.add("small", "table");
-	     tableUnk.border='0';	   
+		var table = document.createElement("table");
+		var tableTram = document.createElement("table");
+		var tableSub = document.createElement("table");
+		var tableBus = document.createElement("table");
+		var tableTrain = document.createElement("table");
+		var tableUnk = document.createElement("table");
+		
+		table.classList.add("small", "table");
+		table.border='0';
+		tableBus.classList.add("small", "table");
+		tableBus.border='0';
+		tableTram.classList.add("small", "table");
+		tableTram.border='0';
+		tableSub.classList.add("small", "table");
+		tableSub.border='0';
+		tableTrain.classList.add("small", "table");
+		tableTrain.border='0';	  
+		tableUnk.classList.add("small", "table");
+		tableUnk.border='0';	   
 	
 								
-	     // check if connections are available and sort by train / tram / sub / bus
-	     // if "fDest" is "false" all departures at the station will be shown.
+		// check if connections are available and sort by train / tram / sub / bus
+		// if "fDest" is "false" all departures at the station will be shown.
 		
 
 
-	     var countedLines = 0;
-	     var countedLinesBus = 0;
-	     var countedLinesTram = 0;
-	     var countedLinesSub = 0;
-	     var countedLinesTrain = 0;
+		var countedLines = 0;
+		var countedLinesBus = 0;
+		var countedLinesTram = 0;
+		var countedLinesSub = 0;
+		var countedLinesTrain = 0;
 	     			
-	     for (var f in this.rmv_data.Departure)
-	     {
-		  var trains = this.rmv_data.Departure[f];
-		  if(this.config.lines !== '') 
-		  {			
-			if(this.rmvLines(trains.name, this.config.lines)) 
-			{	
-	     			if(this.config.fDest == false)
-				{
-					if (trains.Product.catOutL == "S-Bahn" || trains.Product.catOutL == "Niederflurstraßenbahn")
-					{	countedLinesTram = countedLinesTram + 1;	}
-					else if (trains.Product.catOutL == "U-Bahn")
-					{	countedLinesSub = countedLinesSub + 1;	}
-					else if (trains.Product.catOutL == "Niederflurbus" || trains.Product.catOutL == "Bus")
-					{	countedLinesBus = countedLinesBus + 1;	}
-					else if (trains.Product.catOutL == "RB" || trains.Product.catOutL == "RE" || trains.Product.catOutL == "IC" || trains.Product.catOutL == "ICE" || trains.Product.catOutL == "R-Bahn" || trains.Product.catOutL == "EC")
-					{	countedLinesTrain = countedLinesTrain + 1;	}
-					else 
-					{	countedLines = countedLines + 1; }
-				}												
-				else if (trains.direction === this.config.fDestination1 || trains.direction === this.config.fDestination2 || trains.direction === this.config.fDestination3 || trains.direction === this.config.fDestination4 || trains.direction === this.config.fDestination5) 
+		for (var f in this.rmv_data.Departure)
+		{
+			var trains = this.rmv_data.Departure[f];
+			if(this.config.lines !== '') 
+			{			
+				if(this.rmvLines(trains.name, this.config.lines)) 
 				{	
+					if(this.config.fDest == false)
+					{
+						if (trains.Product.catOutL == "S-Bahn" || trains.Product.catOutL == "Niederflurstraßenbahn")
+						{	countedLinesTram = countedLinesTram + 1;	}
+						else if (trains.Product.catOutL == "U-Bahn")
+						{	countedLinesSub = countedLinesSub + 1;	}
+						else if (trains.Product.catOutL == "Niederflurbus" || trains.Product.catOutL == "Bus")
+						{	countedLinesBus = countedLinesBus + 1;	}
+						else if (trains.Product.catOutL == "RB" || trains.Product.catOutL == "RE" || trains.Product.catOutL == "IC" || trains.Product.catOutL == "ICE" || trains.Product.catOutL == "R-Bahn" || trains.Product.catOutL == "EC")
+						{	countedLinesTrain = countedLinesTrain + 1;	}
+						else 
+						{	countedLines = countedLines + 1; }
+					}												
+					else if (trains.direction === this.config.fDestination1 || trains.direction === this.config.fDestination2 || trains.direction === this.config.fDestination3 || trains.direction === this.config.fDestination4 || trains.direction === this.config.fDestination5) 
+					{	
+						if (trains.Product.catOutL == "S-Bahn" || trains.Product.catOutL == "Niederflurstraßenbahn")
+						{	countedLinesTram = countedLinesTram + 1;	}
+						else if (trains.Product.catOutL == "U-Bahn")
+						{	countedLinesSub = countedLinesSub + 1;	}
+						else if (trains.Product.catOutL == "Niederflurbus" || trains.Product.catOutL == "Bus")
+						{	countedLinesBus = countedLinesBus + 1;	}
+						else if (trains.Product.catOutL == "RB" || trains.Product.catOutL == "RE" || trains.Product.catOutL == "IC" || trains.Product.catOutL == "ICE" || trains.Product.catOutL == "R-Bahn" || trains.Product.catOutL == "EC")
+						{	countedLinesTrain = countedLinesTrain + 1;	}
+						else 
+						{	countedLines = countedLines + 1; }
+					}
+					else
+					{}
+				}		 
+			} 
+			else
+			{
+				if(this.config.fDest == false)
+				{
 					if (trains.Product.catOutL == "S-Bahn" || trains.Product.catOutL == "Niederflurstraßenbahn")
 					{	countedLinesTram = countedLinesTram + 1;	}
 					else if (trains.Product.catOutL == "U-Bahn")
 					{	countedLinesSub = countedLinesSub + 1;	}
 					else if (trains.Product.catOutL == "Niederflurbus" || trains.Product.catOutL == "Bus")
 					{	countedLinesBus = countedLinesBus + 1;	}
-					else if (trains.Product.catOutL == "RB" || trains.Product.catOutL == "RE" || trains.Product.catOutL == "IC" || trains.Product.catOutL == "ICE" || trains.Product.catOutL == "R-Bahn" || trains.Product.catOutL == "EC")
+					else if (trains.Product.catOutL == "RB" || trains.Product.catOutL == "RE" || trains.Product.catOutL == "IC" || trains.Product.catOutL == "ICE"  || trains.Product.catOutL == "R-Bahn" || trains.Product.catOutL == "EC")
 					{	countedLinesTrain = countedLinesTrain + 1;	}
 					else 
 					{	countedLines = countedLines + 1; }
 				}
-				else
-				{}
-			} 
-		   } 
-		   else
-		   {
-     			if(this.config.fDest == false)
-			{
-				if (trains.Product.catOutL == "S-Bahn" || trains.Product.catOutL == "Niederflurstraßenbahn")
-				{	countedLinesTram = countedLinesTram + 1;	}
-				else if (trains.Product.catOutL == "U-Bahn")
-				{	countedLinesSub = countedLinesSub + 1;	}
-				else if (trains.Product.catOutL == "Niederflurbus" || trains.Product.catOutL == "Bus")
-				{	countedLinesBus = countedLinesBus + 1;	}
-				else if (trains.Product.catOutL == "RB" || trains.Product.catOutL == "RE" || trains.Product.catOutL == "IC" || trains.Product.catOutL == "ICE"  || trains.Product.catOutL == "R-Bahn" || trains.Product.catOutL == "EC")
-				{	countedLinesTrain = countedLinesTrain + 1;	}
-				else 
-				{	countedLines = countedLines + 1; }
-			}
-			else if (trains.direction === this.config.fDestination1 || trains.direction === this.config.fDestination2 || trains.direction === this.config.fDestination3 || trains.direction === this.config.fDestination4 || trains.direction === this.config.fDestination5)
-			{
-				if (trains.Product.catOutL == "S-Bahn" || trains.Product.catOutL == "Niederflurstraßenbahn")
-				{	countedLinesTram = countedLinesTram + 1;	}
-				else if (trains.Product.catOutL == "U-Bahn")
-				{	countedLinesSub = countedLinesSub + 1;	}
-				else if (trains.Product.catOutL == "Niederflurbus" || trains.Product.catOutL == "Bus")
-				{	countedLinesBus = countedLinesBus + 1;	}
-				else if (trains.Product.catOutL == "RB" || trains.Product.catOutL == "RE" || trains.Product.catOutL == "IC" || trains.Product.catOutL == "ICE"  || trains.Product.catOutL == "R-Bahn" || trains.Product.catOutL == "EC")
-				{	countedLinesTrain = countedLinesTrain + 1;	}
-				else 
-				{	countedLines = countedLines + 1; }
-			}
-			else {}
-		   }
-	     }		
-
-	// adds label
-
-	     if (this.config.labelRow) 
-	     {
-		collector.appendChild(this.Build_RowSp());
-		if (countedLines > 0)
-		{	
-			tableUnk.appendChild(this.Build_LabelRow());	
-		}
-		if (countedLinesTram > 0)
-		{	
-			tableTram.appendChild(this.Build_LabelRow());
-		}
-		if (countedLinesSub > 0)
-		{	
-			tableSub.appendChild(this.Build_LabelRow());
-		}
-		if (countedLinesBus > 0)
-		{	
-			tableBus.appendChild(this.Build_LabelRow());
-		}	
-		if (countedLinesTrain > 0)
-		{	
-			tableTrain.appendChild(this.Build_LabelRow());
-		}	
-	     }
-					
-	     // add the available lines
-	     var countedLines = 0;
-	     var countedLinesBus = 0;
-	     var countedLinesTram = 0;
-	     var countedLinesSub = 0;
-	     var countedLinesTrain = 0;
-				
-	     for (var f in this.rmv_data.Departure)
-	     {
-		  var trains = this.rmv_data.Departure[f];
-
-		  if(this.config.lines !== '' ) 
-		  {
-			if(this.rmvLines(trains.name, this.config.lines)) 
-			{
-	     			if(this.config.fDest == false)
+				else if (trains.direction === this.config.fDestination1 || trains.direction === this.config.fDestination2 || trains.direction === this.config.fDestination3 || trains.direction === this.config.fDestination4 || trains.direction === this.config.fDestination5)
 				{
 					if (trains.Product.catOutL == "S-Bahn" || trains.Product.catOutL == "Niederflurstraßenbahn")
-					{
-					  	if (countedLinesTram < this.config.maxC)
-						{
-							tableTram.appendChild(this.Build_RowData(trains));
-							countedLinesTram = countedLinesTram + 1;
-						}	
-					}
+					{	countedLinesTram = countedLinesTram + 1;	}
 					else if (trains.Product.catOutL == "U-Bahn")
-					{	
-					  	if (countedLinesSub < this.config.maxC)
-						{
-							tableSub.appendChild(this.Build_RowData(trains));
-							countedLinesSub = countedLinesSub + 1;	
-						}					
-					}
+					{	countedLinesSub = countedLinesSub + 1;	}
 					else if (trains.Product.catOutL == "Niederflurbus" || trains.Product.catOutL == "Bus")
-					{	
-					  	if (countedLinesBus < this.config.maxC)
-						{
-							tableBus.appendChild(this.Build_RowData(trains));
-							countedLinesBus = countedLinesBus + 1;
-						}						
-					}
+					{	countedLinesBus = countedLinesBus + 1;	}
 					else if (trains.Product.catOutL == "RB" || trains.Product.catOutL == "RE" || trains.Product.catOutL == "IC" || trains.Product.catOutL == "ICE"  || trains.Product.catOutL == "R-Bahn" || trains.Product.catOutL == "EC")
-					{	
-					  	if (countedLinesTrain < this.config.maxC)
-						{
-							tableTrain.appendChild(this.Build_RowData(trains));
-							countedLinesTrain = countedLinesTrain + 1;
-						}					
-					}
+					{	countedLinesTrain = countedLinesTrain + 1;	}
 					else 
-					{
-					  	if (countedLines < this.config.maxC)
-						{
-							tableUnk.appendChild(this.Build_RowData(trains));							
-							countedLines = countedLines + 1;
-						}
-					}
-				}
-				else if (trains.direction === this.config.fDestination1 || trains.direction === this.config.fDestination2 || trains.direction === this.config.fDestination3 || trains.direction === this.config.fDestination4 || trains.direction === this.config.fDestination5) 
-				{
-					if (trains.Product.catOutL == "S-Bahn" || trains.Product.catOutL == "Niederflurstraßenbahn")
-					{
-					  	if (countedLinesTram < this.config.maxC)
-						{
-							tableTram.appendChild(this.Build_RowData(trains));
-							countedLinesTram = countedLinesTram + 1;
-						}	
-					}
-					else if (trains.Product.catOutL == "U-Bahn")
-					{	
-					  	if (countedLinesSub < this.config.maxC)
-						{
-							tableSub.appendChild(this.Build_RowData(trains));
-							countedLinesSub = countedLinesSub + 1;	
-						}					
-					}
-					else if (trains.Product.catOutL == "Niederflurbus" || trains.Product.catOutL == "Bus")
-					{	
-					  	if (countedLinesBus < this.config.maxC)
-						{
-							tableBus.appendChild(this.Build_RowData(trains));
-							countedLinesBus = countedLinesBus + 1;
-						}						
-					}
-					else if (trains.Product.catOutL == "RB" || trains.Product.catOutL == "RE" || trains.Product.catOutL == "IC" || trains.Product.catOutL == "ICE"  || trains.Product.catOutL == "R-Bahn" || trains.Product.catOutL == "EC")
-					{	
-					  	if (countedLinesTrain < this.config.maxC)
-						{
-							tableTrain.appendChild(this.Build_RowData(trains));
-							countedLinesTrain = countedLinesTrain + 1;
-						}					
-					}
-					else 
-					{
-					  	if (countedLines < this.config.maxC)
-						{
-							tableUnk.appendChild(this.Build_RowData(trains));							
-							countedLines = countedLines + 1;
-						}
-					}
+					{	countedLines = countedLines + 1; }
 				}
 				else {}
-			}						
+			}
+		}		
+
+		// adds label
+		
+		if (this.config.labelRow) 
+		{
+			collector.appendChild(this.Build_RowSp());
+			if (countedLines > 0)
+			{	
+				tableUnk.appendChild(this.Build_LabelRow());	
+			}
+			if (countedLinesTram > 0)
+			{	
+				tableTram.appendChild(this.Build_LabelRow());
+			}
+			if (countedLinesSub > 0)
+			{	
+				tableSub.appendChild(this.Build_LabelRow());
+			}
+			if (countedLinesBus > 0)
+			{	
+				tableBus.appendChild(this.Build_LabelRow());
+			}	
+			if (countedLinesTrain > 0)
+			{	
+				tableTrain.appendChild(this.Build_LabelRow());
+			}		
 		}
-		else
-		{	
-     			if(this.config.fDest == false)
+					
+		// add the available lines
+		var countedLines = 0;
+		var countedLinesBus = 0;
+		var countedLinesTram = 0;
+		var countedLinesSub = 0;
+		var countedLinesTrain = 0;
+				
+		for (var f in this.rmv_data.Departure)
+		{
+			var trains = this.rmv_data.Departure[f];
+			//calc minT
+			var date = new Date();
+			var hour = date.getHours();
+			var min = date.getMinutes();
+			var dataHour;
+			var dataMin;
+			var dataTime;
+			var AddHour = false;
+			var maxTDif = Math.round(this.config.maxT/60)+1;
+			if (!trains.rtTime)
 			{
-				if (trains.Product.catOutL == "S-Bahn" || trains.Product.catOutL == "Niederflurstraßenbahn")
-				{	
-					if (countedLinesTram < this.config.maxC)
-					{
-						tableTram.appendChild(this.Build_RowData(trains));
-						countedLinesTram = countedLinesTram + 1;
-					}	
-				}
-				else if (trains.Product.catOutL == "U-Bahn")
-				{	
-					if (countedLinesSub < this.config.maxC)
-					{
-						tableSub.appendChild(this.Build_RowData(trains));
-						countedLinesSub = countedLinesSub + 1;	
-					}					
-				}
-				else if (trains.Product.catOutL == "Niederflurbus" || trains.Product.catOutL == "Bus")
-				{	
-					if (countedLinesBus < this.config.maxC)
-					{
-						tableBus.appendChild(this.Build_RowData(trains));
-						countedLinesBus = countedLinesBus + 1;	
-					}
-				}
-				else if (trains.Product.catOutL == "RB" || trains.Product.catOutL == "RE" || trains.Product.catOutL == "IC" || trains.Product.catOutL == "ICE"  || trains.Product.catOutL == "R-Bahn" || trains.Product.catOutL == "EC")
-				{	
-					if (countedLinesTrain < this.config.maxC)
-					{
-						tableTrain.appendChild(this.Build_RowData(trains));
-						countedLinesTrain = countedLinesTrain + 1;
-					}	
-				}
-				else 
+				dataHour = parseInt(trains.time.slice(0,2),10);
+				dataMin = parseInt(trains.time.slice(3,5));
+				dataTime = trains.time.slice(0,5);
+			}  
+			else
+			{
+				dataHour = parseInt(trains.rtTime.slice(0,2),10);
+				dataMin = parseInt(trains.rtTime.slice(3,5));
+				dataTime = trains.rtTime.slice(0,5);
+			}
+			if (dataHour < maxTDif && hour > 24 - maxTDif)
+			{
+				dataHour = dataHour + 24;
+				AddHour = true;
+			}    
+			var MinCur = (hour * 60) + min;
+			var MinPlanRT = (dataHour * 60) + dataMin;
+			var MinPlan = ((parseInt(trains.time.slice(0,2),10)) *60) + (parseInt(trains.time.slice(3,5)));
+			if (AddHour && data.time.slice(0,2) < 2)
+			{	
+				MinPlan = MinPlan + 24 * 60;	
+			}    
+			var DifTime = MinPlanRT - MinCur;
+
+			if (!trains.rtTime)
+			{
+				if (DifTime < 0)
 				{
-					if (countedLines < this.config.maxC)
-					{
-						tableUnk.appendChild(this.Build_RowData(trains));							
-						countedLines = countedLines + 1;
-					}
+					DifTime = DifTime * (-1);
 				}
 			}
-			else if (trains.direction === this.config.fDestination1 || trains.direction === this.config.fDestination2 || trains.direction === this.config.fDestination3 || trains.direction === this.config.fDestination4 || trains.direction === this.config.fDestination5)
+			var MinHide = this.config.minT;
+			if (MinHide < 0)
 			{
-				if (trains.Product.catOutL == "S-Bahn" || trains.Product.catOutL == "Niederflurstraßenbahn")
-				{	
-					if (countedLinesTram < this.config.maxC)
-					{
-						tableTram.appendChild(this.Build_RowData(trains));
-						countedLinesTram = countedLinesTram + 1;
-					}	
-				}
-				else if (trains.Product.catOutL == "U-Bahn")
-				{	
-					if (countedLinesSub < this.config.maxC)
-					{
-						tableSub.appendChild(this.Build_RowData(trains));
-						countedLinesSub = countedLinesSub + 1;	
-					}					
-				}
-				else if (trains.Product.catOutL == "Niederflurbus" || trains.Product.catOutL == "Bus")
-				{	
-					if (countedLinesBus < this.config.maxC)
-					{
-						tableBus.appendChild(this.Build_RowData(trains));
-						countedLinesBus = countedLinesBus + 1;	
-					}
-				}
-				else if (trains.Product.catOutL == "RB" || trains.Product.catOutL == "RE" || trains.Product.catOutL == "IC" || trains.Product.catOutL == "ICE"  || trains.Product.catOutL == "R-Bahn" || trains.Product.catOutL == "EC")
-				{	
-					if (countedLinesTrain < this.config.maxC)
-					{
-						tableTrain.appendChild(this.Build_RowData(trains));
-						countedLinesTrain = countedLinesTrain + 1;
-					}	
-				}
-				else 
-				{
-					if (countedLines < this.config.maxC)
-					{
-						tableUnk.appendChild(this.Build_RowData(trains));							
-						countedLines = countedLines + 1;
-					}
-				}
+				MinHide = 0;
 			}
-			else {}
+
+			if (DifTime >= MinHide)
+			{
+				if(this.config.lines !== '') 
+				{
+					if(this.rmvLines(trains.name, this.config.lines)) 
+					{
+						if(this.config.fDest == false)
+						{
+							if (trains.Product.catOutL == "S-Bahn" || trains.Product.catOutL == "Niederflurstraßenbahn")
+							{
+								if (countedLinesTram < this.config.maxC)
+								{
+									tableTram.appendChild(this.Build_RowData(trains));
+									countedLinesTram = countedLinesTram + 1;
+								}	
+							}
+							else if (trains.Product.catOutL == "U-Bahn")
+							{	
+								if (countedLinesSub < this.config.maxC)
+								{
+									tableSub.appendChild(this.Build_RowData(trains));
+									countedLinesSub = countedLinesSub + 1;	
+								}					
+							}
+							else if (trains.Product.catOutL == "Niederflurbus" || trains.Product.catOutL == "Bus")
+							{	
+								if (countedLinesBus < this.config.maxC)
+								{
+									tableBus.appendChild(this.Build_RowData(trains));
+									countedLinesBus = countedLinesBus + 1;
+								}						
+							}
+							else if (trains.Product.catOutL == "RB" || trains.Product.catOutL == "RE" || trains.Product.catOutL == "IC" || trains.Product.catOutL == "ICE"  || trains.Product.catOutL == "R-Bahn" || trains.Product.catOutL == "EC")
+							{	
+								if (countedLinesTrain < this.config.maxC)
+								{
+									tableTrain.appendChild(this.Build_RowData(trains));
+									countedLinesTrain = countedLinesTrain + 1;
+								}					
+							}
+							else 
+							{
+								if (countedLines < this.config.maxC)
+								{
+									tableUnk.appendChild(this.Build_RowData(trains));							
+									countedLines = countedLines + 1;
+								}
+							}
+						}
+						else if (trains.direction === this.config.fDestination1 || trains.direction === this.config.fDestination2 || trains.direction === this.config.fDestination3 || trains.direction === this.config.fDestination4 || trains.direction === this.config.fDestination5) 
+						{
+							if (trains.Product.catOutL == "S-Bahn" || trains.Product.catOutL == "Niederflurstraßenbahn")
+							{
+								if (countedLinesTram < this.config.maxC)
+								{
+									tableTram.appendChild(this.Build_RowData(trains));
+									countedLinesTram = countedLinesTram + 1;
+								}	
+							}
+							else if (trains.Product.catOutL == "U-Bahn")
+							{	
+								if (countedLinesSub < this.config.maxC)
+								{
+									tableSub.appendChild(this.Build_RowData(trains));
+									countedLinesSub = countedLinesSub + 1;	
+								}					
+							}
+							else if (trains.Product.catOutL == "Niederflurbus" || trains.Product.catOutL == "Bus")
+							{	
+								if (countedLinesBus < this.config.maxC)
+								{
+									tableBus.appendChild(this.Build_RowData(trains));
+									countedLinesBus = countedLinesBus + 1;
+								}						
+							}
+							else if (trains.Product.catOutL == "RB" || trains.Product.catOutL == "RE" || trains.Product.catOutL == "IC" || trains.Product.catOutL == "ICE"  || trains.Product.catOutL == "R-Bahn" || trains.Product.catOutL == "EC")
+							{	
+								if (countedLinesTrain < this.config.maxC)
+								{
+									tableTrain.appendChild(this.Build_RowData(trains));
+									countedLinesTrain = countedLinesTrain + 1;
+								}					
+							}
+							else 
+							{
+								if (countedLines < this.config.maxC)
+								{
+									tableUnk.appendChild(this.Build_RowData(trains));							
+									countedLines = countedLines + 1;
+								}
+							}
+						}
+						else {}
+					}						
+				}
+				else
+				{	
+					if(this.config.fDest == false)
+					{
+						if (trains.Product.catOutL == "S-Bahn" || trains.Product.catOutL == "Niederflurstraßenbahn")
+						{	
+							if (countedLinesTram < this.config.maxC)
+							{
+								tableTram.appendChild(this.Build_RowData(trains));
+								countedLinesTram = countedLinesTram + 1;
+							}	
+						}
+						else if (trains.Product.catOutL == "U-Bahn")
+							{	
+							if (countedLinesSub < this.config.maxC)
+							{
+								tableSub.appendChild(this.Build_RowData(trains));
+								countedLinesSub = countedLinesSub + 1;	
+							}					
+						}
+						else if (trains.Product.catOutL == "Niederflurbus" || trains.Product.catOutL == "Bus")
+							{	
+							if (countedLinesBus < this.config.maxC)
+								{
+								tableBus.appendChild(this.Build_RowData(trains));
+								countedLinesBus = countedLinesBus + 1;	
+							}
+						}
+						else if (trains.Product.catOutL == "RB" || trains.Product.catOutL == "RE" || trains.Product.catOutL == "IC" || trains.Product.catOutL == "ICE"  || trains.Product.catOutL == "R-Bahn" || trains.Product.catOutL == "EC")
+						{	
+							if (countedLinesTrain < this.config.maxC)
+							{
+							tableTrain.appendChild(this.Build_RowData(trains));
+							countedLinesTrain = countedLinesTrain + 1;
+							}	
+						}
+						else 
+						{
+							if (countedLines < this.config.maxC)
+							{
+								tableUnk.appendChild(this.Build_RowData(trains));							
+								countedLines = countedLines + 1;
+							}
+						}
+					}
+					else if (trains.direction === this.config.fDestination1 || trains.direction === this.config.fDestination2 || trains.direction === this.config.fDestination3 || trains.direction === this.config.fDestination4 || trains.direction === this.config.fDestination5)
+					{
+						if (trains.Product.catOutL == "S-Bahn" || trains.Product.catOutL == "Niederflurstraßenbahn")
+						{	
+							if (countedLinesTram < this.config.maxC)
+							{
+								tableTram.appendChild(this.Build_RowData(trains));
+								countedLinesTram = countedLinesTram + 1;
+							}	
+						}
+						else if (trains.Product.catOutL == "U-Bahn")
+						{	
+							if (countedLinesSub < this.config.maxC)
+							{
+								tableSub.appendChild(this.Build_RowData(trains));
+								countedLinesSub = countedLinesSub + 1;	
+							}					
+						}
+						else if (trains.Product.catOutL == "Niederflurbus" || trains.Product.catOutL == "Bus")
+						{	
+							if (countedLinesBus < this.config.maxC)
+							{
+								tableBus.appendChild(this.Build_RowData(trains));
+								countedLinesBus = countedLinesBus + 1;	
+							}
+						}
+						else if (trains.Product.catOutL == "RB" || trains.Product.catOutL == "RE" || trains.Product.catOutL == "IC" || trains.Product.catOutL == "ICE"  || trains.Product.catOutL == "R-Bahn" || trains.Product.catOutL == "EC")
+						{	
+							if (countedLinesTrain < this.config.maxC)
+							{
+								tableTrain.appendChild(this.Build_RowData(trains));
+								countedLinesTrain = countedLinesTrain + 1;
+							}	
+						}
+						else 
+						{
+							if (countedLines < this.config.maxC)
+							{
+								tableUnk.appendChild(this.Build_RowData(trains));							
+								countedLines = countedLines + 1;
+							}
+						}
+					}
+					else {}
+				}
+			}	
 		}
-	    }
 		
 	// adds the tables which contain connections to the main display
 	
