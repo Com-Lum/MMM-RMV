@@ -60,7 +60,7 @@ As similar to other modules:
 An easy way for finding out the transport routes is to set "fDest" to false and check out what the module is displaying for the different transport types.<br>
 
 
-1. minimum configuration within `config.js`:
+1. minimum configuration within `config.js`
 
   ... 
 
@@ -69,12 +69,14 @@ An easy way for finding out the transport routes is to set "fDest" to false and 
         position: 'top_right',
         config: {
                 apiKey: '', // see chapter below
-                stationId: '', // for example: '3000001' - 'Frankfurt (Main) Hauptwache'
-                fDestination1: '', // for example 'Wiesbaden Hauptbahnhof' for S8/S9'
+                stationId: '3000001', // for example: '3000001' - 'Frankfurt (Main) Hauptwache'
+                fDestination1: 'Wiesbaden Hauptbahnhof', // for example 'Wiesbaden Hauptbahnhof' for S8/S9'
         }
     }
    
  ...
+
+With this configuration at least the S8/S9 trains should appear demonstrating that not the end point of the journey is important but the final station of the train.
  
 2. Configuration including optional parameters within `config.js`:
    
