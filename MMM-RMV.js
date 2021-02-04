@@ -310,7 +310,7 @@ getDom: function ()
 			var MinCur = (hour * 60) + min;
 			var MinPlanRT = (dataHour * 60) + dataMin;
 			var MinPlan = ((parseInt(trains.time.slice(0,2),10)) *60) + (parseInt(trains.time.slice(3,5)));
-			if (AddHour && data.time.slice(0,2) < 2)
+			if (AddHour && trains.time.slice(0,2) < 2)
 			{	
 				MinPlan = MinPlan + 24 * 60;	
 			}    
