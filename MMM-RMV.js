@@ -21,7 +21,7 @@ Module.register("MMM-RMV", {
 		delayLimit: 0,
 		relativTime: true,
 		reduceD: false,
-		fDest: 'true',
+		fDest: true,
 		fDestination1: '', // update required here
 		fDestination2: '', // update required here
 		fDestination3: '',
@@ -80,7 +80,7 @@ getDom: function ()
 	var collector = document.createElement("div");
 	if (this.config.labelStation == true)
 	{	
-		if (this.config.labelDestination == true && this.config.fDest == false)
+		if (this.config.labelDestination == true && this.config.fDest == true)
 		{
 			var _check = 0;
 			var _fDest = 0;
