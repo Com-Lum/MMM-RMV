@@ -2,11 +2,16 @@
     border-spacing: 0px 0px;
     border-collapse: separate;
     text-align: left;
+    max-width: 450px;
+	}
+
+.MMM-RMV .headerS {
+	max-width: 450px;
 	}
 
 .MMM-RMV .type {
 	font-weight: normal;
-    	border-collapse: separate;
+    border-collapse: separate;
 	color: white;
 	}
 
@@ -17,7 +22,7 @@
 
 .MMM-RMV .destination {
 	font-weight: normal;
-    	border-collapse: separate;
+    border-collapse: separate;
 	color: white;
 	}
 

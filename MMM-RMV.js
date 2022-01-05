@@ -4,7 +4,7 @@
  * By Com-Lum / https://github.com/Com-Lum
  * MIT Licensed.
  * 
- * v1.0.10
+ * v1.0.11
  */
 
 Module.register("MMM-RMV", {
@@ -15,6 +15,7 @@ Module.register("MMM-RMV", {
 		stopName: 'RMV',
 		stationId: '', // update required here
 		labelStation: true,
+		labelDestination: false,
 		labelType: true,
 		labelRow: true,
 		delayLimit: 0,
@@ -34,7 +35,7 @@ Module.register("MMM-RMV", {
 		minT: 0,
 		maxJ: 50,
 		relT: 45,
-        	updateInterval: 1 * 60 * 1000,       // every minute
+        updateInterval: 1 * 60 * 1000,       // every minute
     },
 
     getTranslations: function () {
@@ -64,10 +65,11 @@ Module.register("MMM-RMV", {
     {
 	if (notification === "Trains" + this.config.stationId) 
 	{
+		console.log(payload);	//see recieved data
 	    this.rmv_data = payload;
 	    this.config.stopName = this.rmv_data.Departure[0].stop;
 	    this.updateDom();
-	    //console.log(payload);	//see recieved data	
+		
 	}
     },
 
@@ -78,9 +80,80 @@ getDom: function ()
 	var collector = document.createElement("div");
 	if (this.config.labelStation == true)
 	{	
-		var header = document.createElement("header");
-		header.innerHTML = this.config.stopName;
-		collector.appendChild(header);
+		var _check = 0;
+		var _fDest = 0;
+		
+		if (this.config.fDestination1 !== "")
+		{
+			_check++;
+			_fDest = 1;
+		}
+		if (this.config.fDestination2 !== "")
+		{
+			_check++;
+			_fDest = 2;
+		}
+		if (this.config.fDestination3 !== "")
+		{
+			_check++;
+			_fDest = 3;
+		}
+		if (this.config.fDestination4 !== "")
+		{
+			_check++;
+			_fDest = 4;
+		}
+		if (this.config.fDestination5 !== "")
+		{
+			_check++;
+			_fDest = 5;
+		}
+		
+		if (_check == 1)
+		{
+			var header = document.createElement("header");
+			header.className = "headerS";
+			switch(_fDest)
+			{
+				case 1:
+				{
+					header.innerHTML = this.config.stopName + " -> " + this.config.fDestination1;
+					break;
+				}
+				case 2:
+				{
+					header.innerHTML = this.config.stopName + " -> " + this.config.fDestination2;
+					break;
+				}
+				case 3:
+				{
+					header.innerHTML = this.config.stopName + " -> " + this.config.fDestination3;
+					break;
+				}
+				case 4:
+				{
+					header.innerHTML = this.config.stopName + " -> " + this.config.fDestination4;
+					break;
+				}
+				case 5:
+				{
+					header.innerHTML = this.config.stopName + " -> " + this.config.fDestination5;
+					break;
+				}
+				default:
+				{
+					header.innerHTML = this.config.stopName;
+					break;
+				}
+			}
+			collector.appendChild(header);
+		}
+		else
+		{		
+			var header = document.createElement("header");
+			header.innerHTML = this.config.stopName;
+			collector.appendChild(header);
+		}
 	}
 
 	// lists the blocked types and lines
@@ -665,7 +738,7 @@ getDom: function ()
 
 	Build_BlockedRow: function () 
 	{
-        	var Blocked = this.translate("BLOCKED") + ": ";
+        var Blocked = this.translate("BLOCKED") + ": ";
 		var TypeConfig2 = this.config.Ctype;
 		var LinesConfig2 = this.config.lines;
 		//Ignore spaces / not needed characters
