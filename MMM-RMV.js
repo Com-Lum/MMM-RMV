@@ -80,80 +80,91 @@ getDom: function ()
 	var collector = document.createElement("div");
 	if (this.config.labelStation == true)
 	{	
-		var _check = 0;
-		var _fDest = 0;
-		
-		if (this.config.fDestination1 !== "")
+		if (this.config.labelDestination == true && this.config.fDest == false)
 		{
-			_check++;
-			_fDest = 1;
-		}
-		if (this.config.fDestination2 !== "")
-		{
-			_check++;
-			_fDest = 2;
-		}
-		if (this.config.fDestination3 !== "")
-		{
-			_check++;
-			_fDest = 3;
-		}
-		if (this.config.fDestination4 !== "")
-		{
-			_check++;
-			_fDest = 4;
-		}
-		if (this.config.fDestination5 !== "")
-		{
-			_check++;
-			_fDest = 5;
-		}
-		
-		if (_check == 1)
-		{
-			var header = document.createElement("header");
-			header.className = "headerS";
-			switch(_fDest)
+			var _check = 0;
+			var _fDest = 0;
+
+			if (this.config.fDestination1 !== "")
 			{
-				case 1:
-				{
-					header.innerHTML = this.config.stopName + " -> " + this.config.fDestination1;
-					break;
-				}
-				case 2:
-				{
-					header.innerHTML = this.config.stopName + " -> " + this.config.fDestination2;
-					break;
-				}
-				case 3:
-				{
-					header.innerHTML = this.config.stopName + " -> " + this.config.fDestination3;
-					break;
-				}
-				case 4:
-				{
-					header.innerHTML = this.config.stopName + " -> " + this.config.fDestination4;
-					break;
-				}
-				case 5:
-				{
-					header.innerHTML = this.config.stopName + " -> " + this.config.fDestination5;
-					break;
-				}
-				default:
-				{
-					header.innerHTML = this.config.stopName;
-					break;
-				}
+				_check++;
+				_fDest = 1;
 			}
+			if (this.config.fDestination2 !== "")
+			{
+				_check++;
+				_fDest = 2;
+			}
+			if (this.config.fDestination3 !== "")
+			{
+				_check++;
+				_fDest = 3;
+			}
+			if (this.config.fDestination4 !== "")
+			{
+				_check++;
+				_fDest = 4;
+			}
+			if (this.config.fDestination5 !== "")
+			{
+				_check++;
+				_fDest = 5;
+			}
+
+			if (_check == 1)
+			{
+				var header = document.createElement("header");
+				header.className = "headerS";
+				switch(_fDest)
+				{
+					case 1:
+					{
+						header.innerHTML = this.config.stopName + " -> " + this.config.fDestination1;
+						break;
+					}
+					case 2:
+					{
+						header.innerHTML = this.config.stopName + " -> " + this.config.fDestination2;
+						break;
+					}
+					case 3:
+					{
+						header.innerHTML = this.config.stopName + " -> " + this.config.fDestination3;
+						break;
+					}
+					case 4:
+					{
+						header.innerHTML = this.config.stopName + " -> " + this.config.fDestination4;
+						break;
+					}
+					case 5:
+					{
+						header.innerHTML = this.config.stopName + " -> " + this.config.fDestination5;
+						break;
+					}
+					default:
+					{
+						header.innerHTML = this.config.stopName;
+						break;
+					}
+				}
+				collector.appendChild(header);
+			}
+			else
+			{
+			var header = document.createElement("header");
+			header.innerHTML = this.config.stopName;
 			collector.appendChild(header);
+			}
 		}
 		else
-		{		
+		{
 			var header = document.createElement("header");
 			header.innerHTML = this.config.stopName;
 			collector.appendChild(header);
 		}
+		
+		
 	}
 
 	// lists the blocked types and lines
