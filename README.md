@@ -26,6 +26,7 @@ v1.0.7:   Config-option delayLimit added, new color for cancelled connections<br
 v1.0.8:   Config-options added to reduce height for running multiple instances<br>
 v1.0.9:   Config-options added to reduce Destination Length and to switch between absolute/relativ time<br>
 v1.0.10:  Config-option minT added. If the time [min] until the departure of the connection is below minT it will not be displayed.<br>
+v1.0.11:  Config-option labelDestination added. In case only one fDestination is filled out labelDestination adds the destination to the header.<br>
 <b>Note</b>:
 
 ## Translation
@@ -89,6 +90,7 @@ With this configuration at least the S8/S9 trains should appear demonstrating th
 		apiKey: '', // see chapter below
 		stationId: '',
 		labelStation: true, // adds the departure station as header
+		labelDestination: false // adds the destination name to the header (only works with one fDestination)
 		labelType: true, // adds a line with the connection type (for each type)
 		labelRow: true,
 		relativTime: true, // false: alsways absolute time see also relT
@@ -128,6 +130,7 @@ The correct station name is in column 'E'.<br>
 | :---: | :---: | --- |
 | stationId | | <BR>Choose your departure station<BR><EM> for example value: '3000001' - 'Frankfurt (Main) Hauptwache'</EM><P> |
 | labelStation<BR>`optional` | true | <BR> Show or hide header with departure station name <BR> <P> |
+| labelDestination<BR>`optional` | false | <BR> Adds the destination name to the header (only works with one fDestination) <BR> <P> |
 | labelType<BR>`optional` | true | <BR> Show or hide a line for each connection type (only available connections)<BR> <P> |
 | labelRow<BR>`optional` | true | <BR> Show or hide column headers<BR> <P> |
 | relativTime<BR>`optional` | true | <BR> switches off relative time (if relT = 0 completely, else above 'relT' limit)<BR> <P> |
@@ -158,7 +161,7 @@ The correct station name is in column 'E'.<br>
 ## Licence
 MIT License
 
-Copyright (c) 2018 Com-Lum (https://github.com/Com-Lum/)
+Copyright (c) 2022 Com-Lum (https://github.com/Com-Lum/)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
