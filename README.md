@@ -27,23 +27,19 @@ v1.0.8:   Config-options added to reduce height for running multiple instances<b
 v1.0.9:   Config-options added to reduce Destination Length and to switch between absolute/relativ time<br>
 v1.0.10:  Config-option minT added. If the time [min] until the departure of the connection is below minT it will not be displayed.<br>
 v1.0.11:  Config-option labelDestination added. In case only one fDestination is filled out labelDestination adds the destination to the header.<br>
+v1.0.12:  Replaced deprecated package `request` with `https`.<br>
 <b>Note</b>:
 
 ## Translation
 
 This module is available in English (en) and German (de).
 
-## Dependencies
-  * npm
-  * [request](https://www.npmjs.com/package/request)
-
 ## Installation of the module
 
 As similar to other modules:
 * Navigate into your `MagicMirror/modules folder`
 * `git clone 'https://github.com/Com-Lum/MMM-RMV.git'`
-* Navigate into `MagicMirror/modules/MMM-RMV`
-* Execute `npm intall`
+* thats it, you don't need to run `npm install` because no external dependencies are used
 
 ## Note
 
