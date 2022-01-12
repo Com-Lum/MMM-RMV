@@ -5,22 +5,18 @@
  * MIT Licensed.
  */
 
-const request = require('request');
+const https = require("https");
 const NodeHelper = require("node_helper");
-
-
 
 module.exports = NodeHelper.create({
 
-	start: function() 
+	start: function()
 	{
-        console.log("node helper: " + this.name);
-    	},
+		console.log("node helper: " + this.name);
+	},
 
-	
 	//Built_Para - return URL parameter as string
-	
-	Built_Para: function() 
+	Built_Para: function()
 	{
 		var para = this.config.apiKey;
 		para +="&id=" + this.config.stationId;
@@ -29,25 +25,37 @@ module.exports = NodeHelper.create({
 		para +="&format=json";
 		return para;
 	},
-	
-    	socketNotificationReceived: function(notification, payload) 
-	{
-        	if(notification === 'CONFIG')
-		{
-            	this.config = payload;
-		var rmvUrl = this.config.apiUrl + this.Built_Para();
-		this.getData(rmvUrl, this.config.stationId);
-		//console.log(rmvUrl);
-        	}
-   	},
 
-    	getData: function(options, stationId) {
-		request(options, (error, response, body) => {
-	        if (response.statusCode === 200) {
-				this.sendSocketNotification("Trains" + stationId, JSON.parse(body));
+	socketNotificationReceived: function(notification, payload)
+	{
+		if(notification === 'CONFIG')
+		{
+			this.config = payload;
+			var rmvUrl = this.config.apiUrl + this.Built_Para();
+			this.getData(rmvUrl, this.config.stationId);
+			//console.log(rmvUrl);
+		}
+	},
+
+	getData: function(url, stationId)
+	{
+		https.get(url, (res) => {
+			let data = [];
+			res.on("data", (chunk) => {
+				data.push(chunk);
+			});
+			res.on("end", () => {
+				let text = Buffer.concat(data).toString();
+				if (res.statusCode < 200 || res.statusCode > 299) {
+					console.error("Requesting " + url + " failed with status code " + res.statusCode + " " + text);
 				} else {
-                console.log("Error: No connection data recieved. Error code: " + response.statusCode);
-            }
-        });
-    }
+					if (text !== "") text = JSON.parse(text);
+					this.sendSocketNotification("Trains" + stationId, text);
+				}
+			});
+		})
+		.on("error", (err) => {
+			console.error("Request failed: ", err.message);
+		});
+	}
 });

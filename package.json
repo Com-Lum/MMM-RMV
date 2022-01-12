@@ -19,8 +19,5 @@
   "bugs": {
     "url": "https://github.com/Com-Lum/MMM-RMV/issues"
   },
-  "homepage": "https://github.com/Com-Lum/MMM-RMV#readme",
-  "dependencies": {
-    "request": "^2.74.0"
-  }
+  "homepage": "https://github.com/Com-Lum/MMM-RMV#readme"
 }
