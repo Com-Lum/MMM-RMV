@@ -803,8 +803,9 @@ Module.register("MMM-RMV",{
 			dest = dest.replace("Frankfurt","F-");
 		}
 
-		if (dest.length > 30 && this.config.reduceD) {
+		if (dest.length > 25 && this.config.reduceD) {
 			dest = dest.replace("Wiesbaden","Wi-");
+			dest = dest.replace("Offenbach -Offenbach Ost Ostbahnhof", "Of - Ostbahnhof");
 			dest = dest.replace("Offenbach","Of-");
 			dest = dest.replace("Liederbach","Li-");
 			dest = dest.replace("Neu-Isenburg","NI-");
